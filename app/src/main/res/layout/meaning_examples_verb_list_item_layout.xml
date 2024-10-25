@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/detail_verb_item_eng_transl"
+        android:id="@+id/korean_example_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Item"
@@ -15,22 +15,21 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/detail_verb_item_rus_transl"
+        android:id="@+id/example_eng_transl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/detail_verb_item_eng_transl"
+        app:layout_constraintTop_toBottomOf="@id/korean_example_text"
         android:layout_marginTop="7dp"
         tools:text="Item"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/detail_verb_item_antonym"
+        android:id="@+id/example_rus_transl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/detail_verb_item_rus_transl"
+        app:layout_constraintTop_toBottomOf="@id/example_eng_transl"
         android:layout_marginTop="7dp"
         tools:text="Item"
-        android:textSize="18sp"
-        android:textColor="@color/red"/>
+        android:textSize="18sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

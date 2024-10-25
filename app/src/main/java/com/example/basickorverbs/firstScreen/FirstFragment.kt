@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.basickorverbs.data.testModelData
 import com.example.basickorverbs.databinding.FragmentFirstBinding
-import com.example.basickorverbs.secondScreen.SecondFragment
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

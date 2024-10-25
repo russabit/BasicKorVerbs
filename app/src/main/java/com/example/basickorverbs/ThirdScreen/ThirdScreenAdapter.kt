@@ -1,6 +1,5 @@
-package com.example.basickorverbs.firstScreen
+package com.example.basickorverbs.secondScreen
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,32 +7,32 @@ import android.widget.TextView
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basickorverbs.R
-import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.domain.Example
+import com.example.basickorverbs.domain.Meaning
 
-class FirstScreenAdapter(
-    private val itemList: List<Verb>,
-) : RecyclerView.Adapter<FirstScreenAdapter.ViewHolder>() {
+class ThirdScreenAdapter(
+    private val itemList: List<Example>
+) : RecyclerView.Adapter<ThirdScreenAdapter.ViewHolder>() {
 
     // Внутренний класс ViewHolder описывает элемент списка
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView = itemView.findViewById(R.id.verb_item_text)
+        val koreanExampleTextView: TextView = itemView.findViewById(R.id.korean_example_text)
+        val engTranslExampleTextView: TextView = itemView.findViewById(R.id.example_eng_transl)
+        val rusTranslExampleTextView: TextView = itemView.findViewById(R.id.example_rus_transl)
     }
 
     // Создаём новую разметку для каждого элемента списка
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.verb_list_item_layout, parent, false)
+            .inflate(R.layout.meaning_examples_verb_list_item_layout, parent, false)
         return ViewHolder(view)
     }
 
     // Привязываем данные к элементу списка
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = itemList[position].writing
-        holder.textView.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("verbPosition", position)
-            findNavController(holder.textView).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
-        }
+        holder.koreanExampleTextView.text = itemList[position].korean // to change in settings to rusTranslation if Russian is the main language
+        holder.engTranslExampleTextView.text = itemList[position].engTranslation
+        holder.rusTranslExampleTextView.text = itemList[position].rusTranslation
     }
 
     // Возвращаем количество элементов в списке
