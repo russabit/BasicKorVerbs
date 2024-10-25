@@ -34,19 +34,21 @@ class ThirdFragment : Fragment() {
         val meaningPosition = arguments?.getInt("meaningPosition")
 
 
-            (if (meaningPosition != null && verbPosition != null) {
-                testModelData.find { it.id == verbPosition }
-                    ?.meanings?.get(meaningPosition)
-                    ?.examples
-            } else {
-                throw NullPointerException("verbPosition = " + verbPosition.toString() + "\n"
-                        + "meaningPosition = " + meaningPosition.toString())
-            })
-                .let {
-                    if (it != null) {
-                        binding.recyclerViewThirdFragment.adapter = ThirdScreenAdapter(it)
-                    }
+        (if (meaningPosition != null && verbPosition != null) {
+            testModelData.find { it.id == verbPosition }
+                ?.meanings?.get(meaningPosition)
+                ?.examples
+        } else {
+            throw NullPointerException(
+                "verbPosition = " + verbPosition.toString() + "\n"
+                        + "meaningPosition = " + meaningPosition.toString()
+            )
+        })
+            .let {
+                if (it != null) {
+                    binding.recyclerViewThirdFragment.adapter = ThirdScreenAdapter(it)
                 }
+            }
 
         return binding.root
 
@@ -54,10 +56,6 @@ class ThirdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        /*binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }*/
     }
 
     override fun onDestroyView() {

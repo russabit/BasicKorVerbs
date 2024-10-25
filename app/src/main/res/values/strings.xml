@@ -2,13 +2,9 @@
     <string name="app_name">BasicKorVerbs</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
+    <string name="first_fragment_label">200 verbs list</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="third_fragment_label">Third Fragment</string>
+    <string name="third_fragment_label">Examples</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="lorem_ipsum">
-        text
-    </string>
 </resources>

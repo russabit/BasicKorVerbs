@@ -5,9 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.basickorverbs.R
 import com.example.basickorverbs.data.testModelData
 import com.example.basickorverbs.databinding.FragmentSecondBinding
+import com.example.basickorverbs.domain.Verb
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -19,6 +24,7 @@ class SecondFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var verbName : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +37,13 @@ class SecondFragment : Fragment() {
 
         val position = arguments?.getInt("verbPosition")
 
-        val adapter = position?.let { testModelData[it] }
-            ?.let {
+        val adapter = position
+            ?.let { testModelData[it] }
+            ?.let { verb: Verb ->
+                verbName = verb.writing
                 SecondScreenAdapter(
-                    it.id,
-                    it.meanings
+                    verb.id,
+                    verb.meanings
                 )
             }
 
@@ -48,9 +56,7 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }*/
+        (activity as? AppCompatActivity)?.supportActionBar?.title = verbName
     }
 
     override fun onDestroyView() {
