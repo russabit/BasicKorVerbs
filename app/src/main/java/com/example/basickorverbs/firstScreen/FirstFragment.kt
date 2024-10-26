@@ -16,6 +16,7 @@ import com.example.basickorverbs.databinding.FragmentFirstBinding
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+    private lateinit var adapter: FirstScreenAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -28,14 +29,16 @@ class FirstFragment : Fragment() {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
-        // Задаём менеджер компоновки (например, LinearLayoutManager для вертикального списка)
         binding.recyclerViewFirstFragment.layoutManager = LinearLayoutManager(requireContext())
 
-        // Инициализируем адаптер и присваиваем его RecyclerView
-        val adapter = FirstScreenAdapter(
-            ViewModelProvider(this).get(MainActivityViewModel::class.java).verbsList
-        )
-        binding.recyclerViewFirstFragment.adapter = adapter
+        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
+            .get(MainActivityViewModel::class.java)
+
+        viewmodel.dataList
+            .observe(viewLifecycleOwner) { data ->
+                adapter = FirstScreenAdapter(data)
+                binding.recyclerViewFirstFragment.adapter = adapter
+            }
 
         return binding.root
 

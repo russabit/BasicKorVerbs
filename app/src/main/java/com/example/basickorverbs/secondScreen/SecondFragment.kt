@@ -38,7 +38,7 @@ class SecondFragment : Fragment() {
         val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
         val adapter = position
-            ?.let { viewModel.verbsList[it] }
+            ?.let { viewModel.dataList.value?.get(it)!!  }
             ?.let { verb: Verb ->
                 verbName = verb.writing
                 SecondScreenAdapter(

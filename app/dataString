@@ -48,6 +48,70 @@
         ],
         "antonymId": 0,
         "synonymId": 0
+      },
+      {
+        "engTranslation": "(of time) to pass",
+        "rusTranslation": "(о времени) проходить",
+        "examples": [
+          {
+            "korean": "올해도 또 다 갔다",
+            "engTranslation": "This year has all but passed away, too",
+            "rusTranslation": "И этот год прошёл"
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "(specifically transitive) to last",
+        "rusTranslation": "длится, проходить",
+        "examples": [
+          {
+            "korean": "사흘도 못 간 결심",
+            "engTranslation": "a determination that did not last even three days",
+            "rusTranslation": "решимость/намерение не не продлилось и трёх дней"
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "(colloquial) to be knocked out (e.g. by a blow, by alcohol, etc.)",
+        "rusTranslation": "вырубиться от чего-то",
+        "examples": [
+          {
+            "korean": "사흘도 못 간 결심",
+            "engTranslation": "a determination that did not last even three days",
+            "rusTranslation": "решимость/намерение не не продлилось и трёх дней"
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "(vulgar) to orgasm",
+        "rusTranslation": "длится, проходить",
+        "examples": [        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "Used as the verbal element for nouns related to understanding or interest.",
+        "rusTranslation": "",
+        "examples": [
+          {
+            "korean": "관심이 가.",
+            "engTranslation": "I'm interested in it.",
+            "rusTranslation": "Мне это интересно."
+          },
+          {
+            "korean": "인정은 못하겠는데 이해는 가.",
+            "engTranslation": "I might not be able to accept it, but I understand.",
+            "rusTranslation": "Я наверное не смогу это принять, но я понимаю."
+          },
+        ],
+        "antonymId": 0,
+        "synonymId": 0
       }
     ]
   },

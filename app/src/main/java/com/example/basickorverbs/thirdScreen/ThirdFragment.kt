@@ -35,7 +35,7 @@ class ThirdFragment : Fragment() {
 
 
         (if (meaningPosition != null && verbPosition != null) {
-            ViewModelProvider(this).get(MainActivityViewModel::class.java).verbsList.find {
+            ViewModelProvider(this).get(MainActivityViewModel::class.java).dataList.value?.find {
                 it.id == verbPosition }
                 ?.meanings?.get(meaningPosition)
                 ?.examples
