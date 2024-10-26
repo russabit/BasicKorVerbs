@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.basickorverbs.data.testModelData
+import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentFirstBinding
 
 /**
@@ -32,7 +33,7 @@ class FirstFragment : Fragment() {
 
         // Инициализируем адаптер и присваиваем его RecyclerView
         val adapter = FirstScreenAdapter(
-            testModelData
+            ViewModelProvider(this).get(MainActivityViewModel::class.java).verbsList
         )
         binding.recyclerViewFirstFragment.adapter = adapter
 

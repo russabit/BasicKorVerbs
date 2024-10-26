@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "writing": "가다",
+    "actualPronunciation": "가다",
+    "infinitive": "가",
+    "meanings": [
+      {
+        "engTranslation": "to go",
+        "rusTranslation": "идти",
+        "examples": [
+          {
+            "korean": "대화가 산으로 간다.",
+            "engTranslation": "The conversation is going nowhere. (literally, “The conversation is going to the mountains.”)",
+            "rusTranslation": "Разговор ни к чему ни приводит."
+          }
+        ],
+        "antonymId": 2,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "(auxiliary, with 어) Marks a continuous action that either stretches from the present into the future, or involves physical movement away from the speaker",
+        "rusTranslation": "(как дополнительный глагол, через 어 после основного) продолжающееся действие, тянущееся из настоящего в будущее, или буквальное физическое движение в направлении от говорящего",
+        "examples": [
+          {
+            "korean": "다 먹어간다.",
+            "engTranslation": "I've almost finished my food.",
+            "rusTranslation": "Я почти всё доел."
+          },
+          {
+            "korean": "땅거미가 찾아오고 석양은 또 저물어 간다.",
+            "engTranslation": "Dusk has found its way, and the evening sun is setting again [and will continue to do so].",
+            "rusTranslation": "Сумерки пришли, найдя свой путь, и закатное солнце снова садится (уходя)."
+          }
+        ],
+        "antonymId": 2,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "(of cracks and wrinkles) to appear",
+        "rusTranslation": "появляться (трещинкам, морщинам и т.п.)",
+        "examples": [
+          {
+            "korean": "금이 간 (금이 가다) 유리",
+            "engTranslation": "glass that has cracked",
+            "rusTranslation": "треснувшее (расколотое) стекло"
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "writing": "오다",
+    "actualPronunciation": "오다",
+    "infinitive": "와",
+    "meanings": [
+      {
+        "engTranslation": "to come (to move towards the speaker)",
+        "rusTranslation": "приходить (по направлению в сторону говорящего)",
+        "examples": [
+          {
+            "korean": "오기를 잘했다.",
+            "engTranslation": "made the right choice in coming; glad that one came",
+            "rusTranslation": "хорошо что пришёл (пришла/пришли)"
+          }
+        ],
+        "antonymId": 1,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "to fall (of rain, snow, etc)",
+        "rusTranslation": "идти (о дожде, снеге, граде и т.п.)",
+        "examples": [
+          {
+            "korean": "비가 온다.",
+            "engTranslation": "It's raining. (literally, “Rain comes.”)",
+            "rusTranslation": "Дождь пошёл. (букв. “пришёл”)"
+          }
+        ],
+        "antonymId": 3,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "Marks a continuous action that stretches from the past into the present.",
+        "rusTranslation": "продолжающееся действие, тянущееся из прошлого в настоящее",
+        "examples": [
+          {
+            "korean": "오랫동안 인도에 살아왔다.",
+            "engTranslation": "He has lived in India for a long time.",
+            "rusTranslation": "Он уже давным-давно переехал в Индию."
+          }
+        ],
+        "antonymId": 1,
+        "synonymId": 0
+      }
+    ]
+  }
+]

@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
-import com.example.basickorverbs.data.testModelData
 import com.example.basickorverbs.domain.Meaning
 
 class SecondScreenAdapter(
@@ -38,8 +40,9 @@ class SecondScreenAdapter(
 
         holder.rusTranslTextView.text = "· " + itemList[position].rusTranslation
 
-        holder.antonymTextView.text = "반의어(反義語): " + testModelData.find {
-            it.id == itemList[position].antonymId }?.writing
+/*        holder.antonymTextView.text = "반의어(反義語): " + ViewModelProvider(holder.itemView.findFragment()).get(
+            MainActivityViewModel::class.java).verbsList.find {
+            it.id == itemList[position].antonymId }?.writing*/
 
         holder.engTranslTextView.setOnClickListener {
             val bundle = Bundle()

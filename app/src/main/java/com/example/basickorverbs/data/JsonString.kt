@@ -4,96 +4,96 @@ import com.example.basickorverbs.domain.Example
 import com.example.basickorverbs.domain.Meaning
 import com.example.basickorverbs.domain.Verb
 
-val testModelData = listOf(
+val testModelDataOriginal = listOf(
     Verb(
-        1, "가다", "가다", "가",
-        listOf(
+        id = 1, writing = "가다", actualPronunciation = "가다", infinitive = "가",
+        meanings = listOf(
             Meaning(
-                "to go",
-                "идти",
-                listOf(
+                engTranslation = "to go",
+                rusTranslation = "идти",
+                examples = listOf(
                     Example(
-                        "대화가 산으로 간다.",
-                        "The conversation is going nowhere. (literally, “The conversation is going to the mountains.”)",
-                        "Разговор ни к чему ни приводит."
+                        korean = "대화가 산으로 간다.",
+                        engTranslation = "The conversation is going nowhere. (literally, “The conversation is going to the mountains.”)",
+                        rusTranslation = "Разговор ни к чему ни приводит."
                     )
                 ),
-                2,
-                0
+                antonymId = 2,
+                synonymId = 0
             ),
             Meaning(
-                "(auxiliary, with 어) Marks a continuous action that either stretches from the present into the future, or involves physical movement away from the speaker",
-                "(как дополнительный глагол, через 어 после основного) продолжающееся действие, тянущееся из настоящего в будущее, или буквальное физическое движение в направлении от говорящего",
-                listOf(
+                engTranslation = "(auxiliary, with 어) Marks a continuous action that either stretches from the present into the future, or involves physical movement away from the speaker",
+                rusTranslation = "(как дополнительный глагол, через 어 после основного) продолжающееся действие, тянущееся из настоящего в будущее, или буквальное физическое движение в направлении от говорящего",
+                examples = listOf(
                     Example(
-                        "다 먹어간다.",
-                        "I've almost finished my food.",
-                        "Я почти всё доел."
+                        korean = "다 먹어간다.",
+                        engTranslation = "I've almost finished my food.",
+                        rusTranslation = "Я почти всё доел."
                     ),
                     Example(
-                        "땅거미가 찾아오고 석양은 또 저물어 간다.",
-                        "Dusk has found its way, and the evening sun is setting again [and will continue to do so].",
-                        "Сумерки пришли, найдя свой путь, и закатное солнце снова садится (уходя)."
+                        korean = "땅거미가 찾아오고 석양은 또 저물어 간다.",
+                        engTranslation = "Dusk has found its way, and the evening sun is setting again [and will continue to do so].",
+                        rusTranslation = "Сумерки пришли, найдя свой путь, и закатное солнце снова садится (уходя)."
                     )
                 ),
-                2,
-                0
+                antonymId = 2,
+                synonymId = 0
             ),
             Meaning(
-                "(of cracks and wrinkles) to appear",
-                "появляться (трещинкам, морщинам и т.п.)",
-                listOf(
+                engTranslation = "(of cracks and wrinkles) to appear",
+                rusTranslation = "появляться (трещинкам, морщинам и т.п.)",
+                examples = listOf(
                     Example(
-                        "금이 간 (금이 가다) 유리",
-                        "glass that has cracked",
-                        "треснувшее (расколотое) стекло"
+                        korean = "금이 간 (금이 가다) 유리",
+                        engTranslation = "glass that has cracked",
+                        rusTranslation = "треснувшее (расколотое) стекло"
                     ),
                 ),
-                0, 0
+                antonymId = 0, synonymId = 0
             )
         )
     ),
     Verb(
-        2, "오다", "오다", "와",
-        listOf(
+        id = 2, writing = "오다", actualPronunciation = "오다", infinitive = "와",
+        meanings = listOf(
             Meaning(
-                "to come (to move towards the speaker)",
-                "приходить (по направлению в сторону говорящего)",
-                listOf(
+                engTranslation = "to come (to move towards the speaker)",
+                rusTranslation = "приходить (по направлению в сторону говорящего)",
+                examples = listOf(
                     Example(
-                        "오기를 잘했다.",
-                        "made the right choice in coming; glad that one came",
-                        "хорошо что пришёл (пришла/пришли)"
+                        korean = "오기를 잘했다.",
+                        engTranslation = "made the right choice in coming; glad that one came",
+                        rusTranslation = "хорошо что пришёл (пришла/пришли)"
                     )
                 ),
-                1,
-                0
+                antonymId = 1,
+                synonymId = 0
             ),
             Meaning(
-                "to fall (of rain, snow, etc)",
-                "идти (о дожде, снеге, граде и т.п.)",
-                listOf(
+                engTranslation = "to fall (of rain, snow, etc)",
+                rusTranslation = "идти (о дожде, снеге, граде и т.п.)",
+                examples = listOf(
                     Example(
-                        "비가 온다.",
-                        "It's raining. (literally, “Rain comes.”)",
-                        "Дождь пошёл. (букв. “пришёл”)"
+                        korean = "비가 온다.",
+                        engTranslation = "It's raining. (literally, “Rain comes.”)",
+                        rusTranslation = "Дождь пошёл. (букв. “пришёл”)"
                     )
                 ),
-                3, // 내리다 ?
-                0
+                antonymId = 3, // 내리다 ?
+                synonymId = 0
             ),
             Meaning(
-                "Marks a continuous action that stretches from the past into the present. ",
-                "продолжающееся действие, тянущееся из прошлого в настоящее",
-                listOf(
+                engTranslation = "Marks a continuous action that stretches from the past into the present. ",
+                rusTranslation = "продолжающееся действие, тянущееся из прошлого в настоящее",
+                examples = listOf(
                     Example(
-                        "오랫동안 인도에 살아왔다.",
-                        "He has lived in India for a long time.",
-                        "Он уже давным-давно переехал в Индию."
+                        korean = "오랫동안 인도에 살아왔다.",
+                        engTranslation = "He has lived in India for a long time.",
+                        rusTranslation = "Он уже давным-давно переехал в Индию."
                     )
                 ),
-                1,
-                0
+                antonymId = 1,
+                synonymId = 0
             )
         )
     )

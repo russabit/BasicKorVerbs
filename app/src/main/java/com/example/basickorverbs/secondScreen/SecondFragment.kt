@@ -1,16 +1,14 @@
 package com.example.basickorverbs.secondScreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.basickorverbs.R
-import com.example.basickorverbs.data.testModelData
+import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentSecondBinding
 import com.example.basickorverbs.domain.Verb
 
@@ -37,8 +35,10 @@ class SecondFragment : Fragment() {
 
         val position = arguments?.getInt("verbPosition")
 
+        val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
         val adapter = position
-            ?.let { testModelData[it] }
+            ?.let { viewModel.verbsList[it] }
             ?.let { verb: Verb ->
                 verbName = verb.writing
                 SecondScreenAdapter(

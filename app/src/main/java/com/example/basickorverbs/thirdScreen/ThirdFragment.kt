@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.basickorverbs.data.testModelData
-import com.example.basickorverbs.databinding.FragmentSecondBinding
+import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentThirdBinding
 
 /**
@@ -35,7 +35,8 @@ class ThirdFragment : Fragment() {
 
 
         (if (meaningPosition != null && verbPosition != null) {
-            testModelData.find { it.id == verbPosition }
+            ViewModelProvider(this).get(MainActivityViewModel::class.java).verbsList.find {
+                it.id == verbPosition }
                 ?.meanings?.get(meaningPosition)
                 ?.examples
         } else {
