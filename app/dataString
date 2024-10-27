@@ -117,6 +117,474 @@
   },
   {
     "id": 2,
+    "writing": "가깝다",
+    "actualPronunciation": "가깝따",
+    "infinitive": "가까워",
+    "meanings": [
+      {
+        "engTranslation": "to be close (in relation to the subject)",
+        "rusTranslation": "находиться/быть близко (по отношению к субъекту)",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "writing": "거칠다",
+    "actualPronunciation": "거칠다",
+    "infinitive": "거칠어",
+    "meanings": [
+      {
+        "engTranslation": "to be rough or coarse in texture",
+        "rusTranslation": "грубый, шершавый, неровный, жёсткий",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+	{
+        "engTranslation": "to be rough or coarse in manner",
+        "rusTranslation": "жёсткий, грубый (о манерах)",
+        "examples": [
+          {
+            "korean": "그녀는 거친 운동을 싫어해요.",
+            "engTranslation": "She hates rough (violent) sports.",
+            "rusTranslation": "Она не любит жёсткие виды спорта.",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+	{
+        "engTranslation": "(of a landscape) to be wild or desolate",
+        "rusTranslation": "(о пейзаже) быть диким или заброшенным",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 4,
+    "writing": "길다",
+    "actualPronunciation": "길다",
+    "infinitive": "길어",
+    "meanings": [
+      {
+        "engTranslation": "to be long",
+        "rusTranslation": "быть длинным",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 5,
+    "writing": "깨끗하다",
+    "actualPronunciation": "깨(께)끄타다",
+    "infinitive": "깨끗해",
+    "meanings": [
+      {
+        "engTranslation": "to be clean",
+        "rusTranslation": "быть чистым",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 6,
+    "writing": "넓다",
+    "actualPronunciation": "널따",
+    "infinitive": "넓어",
+    "meanings": [
+      {
+        "engTranslation": "to be wide, large, broad",
+        "rusTranslation": "быть широким",
+        "examples": [
+          {
+            "korean": "",
+            "engTranslation": "",
+            "rusTranslation": "",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 7,
+    "writing": "넣다",
+    "actualPronunciation": "너타",
+    "infinitive": "넣어",
+    "meanings": [
+      {
+        "engTranslation": "to put, to include, to insert",
+        "rusTranslation": "вставить, включить (напр. в список, в программу и т.п.)",
+        "examples": [
+          {
+            "korean": "붙들어 손에 넣다",
+            "engTranslation": "to capture something or someone",
+            "rusTranslation": "поймать что-то или кого-то",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 8,
+    "writing": "높다",
+    "actualPronunciation": "놉따",
+    "infinitive": "높아",
+    "meanings": [
+      {
+        "engTranslation": "(lit. & fig.) to be high, to be tall, to be lofty",
+        "rusTranslation": "(букв. и перен.) быть высоким",
+        "examples": [
+          {
+            "korean": "높은 건물",
+            "engTranslation": "a tall building",
+            "rusTranslation": "высокое здание",
+          },
+          {
+            "korean": "높은 수압",
+            "engTranslation": "high water pressure",
+            "rusTranslation": "высокое давление воды",
+          },
+          {
+            "korean": "높은 목소리",
+            "engTranslation": "high voice",
+            "rusTranslation": "высокий голос",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+{
+        "engTranslation": "to be high up, to be high in social rank (of a person)",
+        "rusTranslation": "(о человеке) быть высокого социального статуса",
+        "examples": [
+          {
+            "korean": "높은 분이 오신대.",
+            "engTranslation": "They're saying someone high up is coming.",
+            "rusTranslation": "Говорят кто-то высокий (сверху) придёт",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+{
+        "engTranslation": "(only in royal court) to be tall (of a person)",
+        "rusTranslation": "(только в королевском суде) быть высокого роста",
+        "examples": [
+          {
+            "korean": "주상께서 키가 높으시니",
+            "engTranslation": "As His Majesty is tall in height...",
+            "rusTranslation": "Поскольку Его Величество высокого роста...",
+          }
+        ],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 9,
+    "writing": "딱딱하다",
+    "actualPronunciation": "딱따카다",
+    "infinitive": "딱딱해",
+    "meanings": [
+      {
+        "engTranslation": "to be hard, firm",
+        "rusTranslation": "быть твёрдым, прочным",
+        "examples": [],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 10,
+    "writing": "더하다",
+    "actualPronunciation": "더하다",
+    "infinitive": "더해",
+    "meanings": [
+      {
+        "engTranslation": "to be more than",
+        "rusTranslation": "быть больше чем",
+        "examples": [],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "to add, to increase",
+        "rusTranslation": "увеличивать, складывать с",
+        "examples": [],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+{
+        "engTranslation": "to worsen/become better",
+        "rusTranslation": "ухудшаться/становиться лучше",
+        "examples": [],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 11,
+    "writing": "던지다",
+    "actualPronunciation": "던지다",
+    "infinitive": "던져",
+    "meanings": [
+      {
+        "engTranslation": "to throw, to hurl",
+        "rusTranslation": "кидать, бросать",
+        "examples": [],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 12,
+    "writing": "덥다",
+    "actualPronunciation": "덥따",
+    "infinitive": "더워",
+    "meanings": [
+      {
+        "engTranslation": "to be hot (of the weather or outside temperature)",
+        "rusTranslation": "жарко (на улице)",
+        "examples": [
+{
+            "korean": "날씨가 덥지 않아요?",
+            "engTranslation": "Isn't the weather hot?",
+            "rusTranslation": "На улице ведь жарко?",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 13,
+    "writing": "붙이다",
+    "actualPronunciation": "부치다",
+    "infinitive": "붙여",
+    "meanings": [
+      {
+        "engTranslation": "to affix or attach, to stick",
+        "rusTranslation": "приклеить, присоединить, прилепить",
+        "examples": [
+{
+            "korean": "불을 붙이다",
+            "engTranslation": "to light a fire",
+            "rusTranslation": "разжечь огонь",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 14,
+    "writing": "사다",
+    "actualPronunciation": "사다",
+    "infinitive": "사",
+    "meanings": [
+      {
+        "engTranslation": "to buy, to purchase",
+        "rusTranslation": "купить",
+        "examples": [
+{
+            "korean": "뭐 좀 살 게 있어서 시장에 가고 있어요.",
+            "engTranslation": "I'm going to the market. I need to buy something.",
+            "rusTranslation": "Я на рынок, мне надо кое-что купить.",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+{
+        "engTranslation": "to cause, to incur, to evoke (an emotion or feeling)",
+        "rusTranslation": "вызвать (эмоцию)",
+        "examples": [
+{
+            "korean": "공분을 사다",
+            "engTranslation": "to incite public outrage",
+            "rusTranslation": "вызвать народное возмущение",
+          },
+{
+            "korean": "미움을 사다",
+            "engTranslation": "to incur hatred",
+            "rusTranslation": "вызвать ненависть",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 15,
+    "writing": "싸우다",
+    "actualPronunciation": "싸우다",
+    "infinitive": "싸워",
+    "meanings": [
+      {
+        "engTranslation": "to fight or struggle",
+        "rusTranslation": "драться или бороться",
+        "examples": [
+{
+            "korean": "그런데 싸울때 당신이라고 부르면 나쁜말이 되기도 해요.",
+            "engTranslation": "But if you call me 당신 when fighting, it can also become a bad word.",
+            "rusTranslation": "Но если ты будешь ко мне на ты во время ссоры, то даже ты станет плохим словом.",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      }
+    ]
+  },
+{
+    "id": 16,
+    "writing": "쓰다",
+    "actualPronunciation": "쓰다",
+    "infinitive": "써",
+    "meanings": [
+      {
+        "engTranslation": "to wear, to put on",
+        "rusTranslation": "надевать",
+        "examples": [
+{
+            "korean": "모자를 쓰다",
+            "engTranslation": "to wear a hat",
+            "rusTranslation": "носить шляпу",
+          },
+{
+            "korean": "안경을 쓰다",
+            "engTranslation": "to put on glasses",
+            "rusTranslation": "надевать очки",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+      {
+        "engTranslation": "to put up, to hold (an umbrella over one's head)",
+        "rusTranslation": "держать зонтик над головой",
+        "examples": [
+{
+            "korean": "우산을 쓰다",
+            "engTranslation": "to put up an umbrella",
+            "rusTranslation": "раскрыть зонтик над собой (спрятаться под *)",
+          },
+{
+            "korean": "양산을 쓰다",
+            "engTranslation": "to put up a parasol",
+            "rusTranslation": "спрятаться под зонтик от солнца",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      },      {
+        "engTranslation": "to be accused of, to be suspected of (an offense)",
+        "rusTranslation": "быть обвинённым в (правонарушении)",
+        "examples": [
+{
+            "korean": "혐의를 쓰다",
+            "engTranslation": "to be suspected of an offense",
+            "rusTranslation": "быть подозреваемым по ",
+          },
+{
+            "korean": "누명을 쓰다",
+            "engTranslation": "to be falsely accused",
+            "rusTranslation": "быть ложно обвинённым",
+          }
+],
+        "antonymId": 0,
+        "synonymId": 0
+      },      
+{
+        "engTranslation": "to be covered (with dust, powder etc)",
+        "rusTranslation": "быть покрытым (пылью, мукой и т.п.)",
+        "examples": [
+{
+            "korean": "청소를 했더니 온몸에 먼지를 쎴다.",
+            "engTranslation": "After cleaning, my body was covered with dust.",
+            "rusTranslation": "После уборки тело покрыто пылью.",
+          },
+{
+            "korean": "광부들은 온통 석탄 가루를 쎴다.",
+            "engTranslation": "The mineworkers were covered with coal dust.",
+            "rusTranslation": "Шахтёры были покрыты угольной сажей.",
+          },
+],
+        "antonymId": 0,
+        "synonymId": 0
+      },
+    ]
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+  {
+    "id": 3,
     "writing": "오다",
     "actualPronunciation": "오다",
     "infinitive": "와",

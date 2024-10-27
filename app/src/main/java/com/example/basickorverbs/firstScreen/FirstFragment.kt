@@ -40,6 +40,11 @@ class FirstFragment : Fragment() {
                 binding.recyclerViewFirstFragment.adapter = adapter
             }
 
+        binding.recyclerViewFirstFragment.adapter = this.context?.let {
+            viewmodel.getVerbListFromString(it)
+                ?.let { FirstScreenAdapter(it) }
+        }
+
         return binding.root
 
     }

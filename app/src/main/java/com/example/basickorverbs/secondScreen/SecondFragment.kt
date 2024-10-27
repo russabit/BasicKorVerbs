@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentSecondBinding
 import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.firstScreen.FirstScreenAdapter
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -18,11 +19,11 @@ import com.example.basickorverbs.domain.Verb
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
+    private lateinit var adapter: SecondScreenAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var verbName : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,28 +36,30 @@ class SecondFragment : Fragment() {
 
         val position = arguments?.getInt("verbPosition")
 
-        val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
+            .get(MainActivityViewModel::class.java)
 
-        val adapter = position
-            ?.let { viewModel.dataList.value?.get(it)!!  }
-            ?.let { verb: Verb ->
-                verbName = verb.writing
-                SecondScreenAdapter(
-                    verb.id,
-                    verb.meanings
-                )
+        viewModel.dataList
+            .observe(viewLifecycleOwner) { list ->
+                list?.let {
+                    if (position != null) {
+                        viewModel.dataList.value?.get(position).let { verb ->
+                            if (verb != null) {
+                                adapter = SecondScreenAdapter(
+                                    verb.id,
+                                    verb.meanings
+                                )
+                                (activity as? AppCompatActivity)?.supportActionBar?.title = verb.writing
+                            }
+                            binding.recyclerViewSecondFragment.adapter = adapter
+
+                        }
+                    }
+                }
             }
-
-        binding.recyclerViewSecondFragment.adapter = adapter
 
         return binding.root
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        (activity as? AppCompatActivity)?.supportActionBar?.title = verbName
     }
 
     override fun onDestroyView() {

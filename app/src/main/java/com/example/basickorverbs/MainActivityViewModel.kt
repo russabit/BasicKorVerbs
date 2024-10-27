@@ -1,5 +1,6 @@
 package com.example.basickorverbs
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,11 +10,20 @@ import com.example.basickorverbs.domain.Verb
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class MainActivityViewModel: ViewModel() {
 
     private val _dataList = MutableLiveData<List<Verb>>()
     val dataList: LiveData<List<Verb>> = _dataList
+
+    fun getVerbListFromString(context: Context): List<Verb>? {
+
+        val string = readJsonFileFromAssets(context, "jsonVerbList.json")
+
+        return string?.let { VerbRepository().convertJsonToVerbList(it) }.also { _dataList.value = it }
+
+    }
 
     fun callServer() = VerbRepository().verbApiService.getVerbs().enqueue(object : Callback<List<Verb>> {
 
@@ -31,4 +41,19 @@ class MainActivityViewModel: ViewModel() {
             Log.e("API Error", t.message ?: "Unknown error")
         }
     })
+
+    fun readJsonFileFromAssets(context: Context, fileName: String): String? {
+        return try {
+            val inputStream = context.assets.open(fileName)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            String(buffer, Charsets.UTF_8)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 }
