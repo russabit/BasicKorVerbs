@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentSecondBinding
-import com.example.basickorverbs.domain.Verb
-import com.example.basickorverbs.firstScreen.FirstScreenAdapter
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -52,7 +50,6 @@ class SecondFragment : Fragment() {
                                 (activity as? AppCompatActivity)?.supportActionBar?.title = verb.writing
                             }
                             binding.recyclerViewSecondFragment.adapter = adapter
-
                         }
                     }
                 }

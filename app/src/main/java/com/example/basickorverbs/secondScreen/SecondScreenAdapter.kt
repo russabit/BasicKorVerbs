@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.findFragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
 import com.example.basickorverbs.domain.Meaning
 
@@ -22,7 +19,7 @@ class SecondScreenAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val engTranslTextView: TextView = itemView.findViewById(R.id.detail_verb_item_eng_transl)
         val rusTranslTextView: TextView = itemView.findViewById(R.id.detail_verb_item_rus_transl)
-        val antonymTextView: TextView = itemView.findViewById(R.id.detail_verb_item_antonym)
+        //val antonymTextView: TextView = itemView.findViewById(R.id.detail_verb_item_antonym)
     }
 
     // Создаём новую разметку для каждого элемента списка
@@ -44,7 +41,7 @@ class SecondScreenAdapter(
             MainActivityViewModel::class.java).verbsList.find {
             it.id == itemList[position].antonymId }?.writing*/
 
-        holder.engTranslTextView.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("verbId", verbId)
             bundle.putInt("meaningPosition", position)

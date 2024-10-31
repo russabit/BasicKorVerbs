@@ -29,7 +29,7 @@ class FirstScreenAdapter(
     // Привязываем данные к элементу списка
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = itemList[position].writing
-        holder.textView.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("verbPosition", position)
             findNavController(holder.textView).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)

@@ -1,12 +1,12 @@
 package com.example.basickorverbs.firstScreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentFirstBinding
 
@@ -29,7 +29,14 @@ class FirstFragment : Fragment() {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
-        binding.recyclerViewFirstFragment.layoutManager = LinearLayoutManager(requireContext())
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerViewFirstFragment.layoutManager = GridLayoutManager(requireContext(), 3)
 
         val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
             .get(MainActivityViewModel::class.java)
@@ -40,21 +47,15 @@ class FirstFragment : Fragment() {
                 binding.recyclerViewFirstFragment.adapter = adapter
             }
 
-        binding.recyclerViewFirstFragment.adapter = this.context?.let {
-            viewmodel.getVerbListFromString(it)
+        binding.recyclerViewFirstFragment.adapter = this.context?.let { context ->
+            viewmodel.getVerbListFromString(context)
                 ?.let { FirstScreenAdapter(it) }
         }
-
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

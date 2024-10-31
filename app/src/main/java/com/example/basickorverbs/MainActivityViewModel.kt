@@ -15,13 +15,16 @@ import java.io.IOException
 class MainActivityViewModel: ViewModel() {
 
     private val _dataList = MutableLiveData<List<Verb>>()
+
     val dataList: LiveData<List<Verb>> = _dataList
 
     fun getVerbListFromString(context: Context): List<Verb>? {
 
         val string = readJsonFileFromAssets(context, "jsonVerbList.json")
 
-        return string?.let { VerbRepository().convertJsonToVerbList(it) }.also { _dataList.value = it }
+        return string
+            ?.let { VerbRepository().convertJsonToVerbList(it) }
+            .also { _dataList.value = it }
 
     }
 
@@ -42,7 +45,7 @@ class MainActivityViewModel: ViewModel() {
         }
     })
 
-    fun readJsonFileFromAssets(context: Context, fileName: String): String? {
+    private fun readJsonFileFromAssets(context: Context, fileName: String): String? {
         return try {
             val inputStream = context.assets.open(fileName)
             val size = inputStream.available()
