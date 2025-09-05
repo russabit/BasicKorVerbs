@@ -1,17 +1,19 @@
-package com.example.basickorverbs.secondScreen
+package com.example.basickorverbs.thirdScreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentThirdBinding
+import com.example.basickorverbs.secondScreen.ThirdScreenAdapter
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] to represent a list of examples after tapping on concrete meaning of a verb.
  */
 class ThirdFragment : Fragment() {
 
@@ -30,15 +32,31 @@ class ThirdFragment : Fragment() {
 
         binding.recyclerViewThirdFragment.layoutManager = LinearLayoutManager(requireContext())
 
+        initRecyclerView()
+
+        return binding.root
+
+    }
+
+    private fun initRecyclerView() {
         val verbPosition = arguments?.getInt("verbId")
         val meaningPosition = arguments?.getInt("meaningPosition")
 
-
         (if (meaningPosition != null && verbPosition != null) {
             ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
-                .get(MainActivityViewModel::class.java).dataList.value?.find {
-                it.id == verbPosition }
-                ?.meanings?.get(meaningPosition)
+                .get(MainActivityViewModel::class.java)
+                .dataList
+                .value
+                ?.find {
+                    it.id == verbPosition
+                }
+                ?.meanings
+                ?.get(meaningPosition)
+                .also {
+                    if (it != null) {
+                        setScreenTitle(it.engTranslation)
+                    }
+                }
                 ?.examples
         } else {
             throw NullPointerException(
@@ -51,13 +69,10 @@ class ThirdFragment : Fragment() {
                     binding.recyclerViewThirdFragment.adapter = ThirdScreenAdapter(it)
                 }
             }
-
-        return binding.root
-
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setScreenTitle(verbMeaning: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = verbMeaning
     }
 
     override fun onDestroyView() {

@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/fragmentAbout"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="О приложении"
+        android:textSize="24sp"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:id="@+id/tvVerbCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Глаголов: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvMeaningCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Значений: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvExampleCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Примеров: 0"
+        android:textSize="18sp"/>
+
+</LinearLayout>

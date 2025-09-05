@@ -1,15 +1,15 @@
 package com.example.basickorverbs
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
 import com.example.basickorverbs.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -44,8 +44,28 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        val navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(R.id.nav_graph, false) // не чистим весь стек, а просто не дублируем
+            .build()
+
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_test_antonyms -> {
+                navController.navigate(R.id.trainingFragment, null, navOptions)
+                true
+            }
+            R.id.action_test_examples -> {
+                navController.navigate(R.id.exampleTrainingFragment, null, navOptions)
+                true
+            }
+            R.id.menu_about -> {
+                navController.navigate(R.id.aboutFragment, null, navOptions)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

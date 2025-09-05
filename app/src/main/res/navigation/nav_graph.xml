@@ -29,9 +29,29 @@
     </fragment>
     <fragment
         android:id="@+id/ThirdFragment"
-        android:name="com.example.basickorverbs.secondScreen.ThirdFragment"
+        android:name="com.example.basickorverbs.thirdScreen.ThirdFragment"
         android:label="@string/third_fragment_label"
         tools:layout="@layout/fragment_third">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.example.basickorverbs.antonymsTestScreen.AntonymsTestFragment"
+        android:label="@string/antonyms_test_fragment_label"
+        tools:layout="@layout/fragment_antonym_training" />
+
+    <fragment
+        android:id="@+id/exampleTrainingFragment"
+        android:name="com.example.basickorverbs.examplesTrainingScreen.ExampleTrainingFragment"
+        android:label="@string/examples_test_fragment_label"
+        tools:layout="@layout/fragment_example_training" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.basickorverbs.AboutScreen.AboutFragment"
+        android:label="@string/about_fragment_label"
+        tools:layout="@layout/fragment_about" />
+
+
 </navigation>

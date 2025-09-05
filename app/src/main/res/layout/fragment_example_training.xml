@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/fragment_example_training"
+    android:padding="16dp">
+
+    <!-- Сам пример -->
+    <TextView
+        android:id="@+id/tvExampleKorean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예문"
+        android:textSize="22sp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Здесь будут появляться переводы -->
+    <TextView
+        android:id="@+id/tvAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Кнопки проверки -->
+    <Button
+        android:id="@+id/btnShowRus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Показать перевод (РУС)" />
+
+    <Button
+        android:id="@+id/btnShowEng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Показать перевод (ENG)" />
+
+    <Button
+        android:id="@+id/btnShowMeaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Показать значение" />
+
+    <Button
+        android:id="@+id/btnShowAntonym"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Показать антоним" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginVertical="24dp"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Следующий пример" />
+
+</LinearLayout>

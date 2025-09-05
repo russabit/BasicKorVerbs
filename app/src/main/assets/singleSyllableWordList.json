@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "writing": "털",
+    "actualPronunciation": "",
+    "meanings": [
+      {
+        "engTranslation": "hair, fur",
+        "rusTranslation": "волос, шерсть",
+        "examples": [
+          {
+            "korean": "털이 있는 ~",
+            "engTranslation": "covered in hair / or hairy?",
+            "rusTranslation": "покрытый волосами"
+          },
+          {
+            "korean": "나는 그에게 완전히 미운털이 박혔다.",
+            "engTranslation": "I'm totally on his blacklist. (He has it in for me)",
+            "rusTranslation": "Он меня терпеть не может. (идиом. досл. как нелюбимый волос вбился)"
+          },
+          {
+            "korean": "털실 한 가닥",
+            "engTranslation": "a strand of wool",
+            "rusTranslation": "одна нить шерсти"
+          }
+        ],
+        "antonymId": 51,
+        "synonymId": 0
+      }
+      ],
+    "derived terms": [
+      {
+        "writing": "털보",
+        "actualPronunciation": "",
+        "meanings": [
+          {
+            "engTranslation": "hairy person",
+            "rusTranslation": "волосатый человек, волосатик, бородатый человек, бородач",
+            "examples": [
+              {
+                "korean": "그는 수염이 많아서 털보로 불린다",
+                "engTranslation": "He's called -Hairy- because he has a thick beard.",
+                "rusTranslation": "Его прозвали волосатиком из-за его густой бороды."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "writing": "털보말벌",
+        "actualPronunciation": "",
+        "meanings": [
+          {
+            "engTranslation": "yellow hornet",
+            "rusTranslation": "японский жёлтый шершень",
+            "examples": [
+              {
+                "korean": "그는 수염이 많아서 털보로 불린다",
+                "engTranslation": "He's called -Hairy- because he has a thick beard.",
+                "rusTranslation": "Его прозвали волосатиком из-за его густой бороды."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

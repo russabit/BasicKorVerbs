@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">BasicKorVerbs</string>
+    <string name="action_test_antonyms">Test Antonyms</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">200 verbs list</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="third_fragment_label">Examples</string>
+    <string name="antonyms_test_fragment_label">Antonyms</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="action_test_examples">Test Examples</string>
+    <string name="examples_test_fragment_label">Examples</string>
+    <string name="about_fragment_label">About</string>
 </resources>
