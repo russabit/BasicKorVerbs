@@ -39,7 +39,11 @@
         android:id="@+id/trainingFragment"
         android:name="com.example.basickorverbs.antonymsTestScreen.AntonymsTestFragment"
         android:label="@string/antonyms_test_fragment_label"
-        tools:layout="@layout/fragment_antonym_training" />
+        tools:layout="@layout/fragment_antonym_training">
+        <action
+            android:id="@+id/action_test_antonyms_to_SecondFragment"
+            app:destination="@+id/SecondFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/exampleTrainingFragment"
