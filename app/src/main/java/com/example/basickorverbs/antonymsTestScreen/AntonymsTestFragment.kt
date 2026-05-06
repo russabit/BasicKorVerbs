@@ -24,7 +24,8 @@ class AntonymsTestFragment : Fragment() {
     private lateinit var buttons: List<Button>
 
     private val random = Random
-    private var currentWord: String = ""
+
+    private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +42,22 @@ class AntonymsTestFragment : Fragment() {
             view.findViewById(R.id.btnOption4)
         )
 
-        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.NewInstanceFactory()
+        )[MainActivityViewModel::class.java]
 
-        viewmodel.dataList
+        viewModel.dataList
             .observe(viewLifecycleOwner) { data ->
 
-                loadNewRound(data)
+                if (viewModel.antonymTestCurrentWord.isEmpty()) {
+                    loadNewRound(data)
+                } else {
+                    restoreRound()
+                }
 
                 //finds the right verb and let's us go to the second frag with list of meanings
-                val verb = data.find { it.writing == currentWord }
+                val verb = data.find { it.writing == viewModel.antonymTestCurrentWord }
                 val bundle = Bundle()
                 bundle.putInt("verbPosition", data.indexOf(verb))
 
@@ -63,41 +71,45 @@ class AntonymsTestFragment : Fragment() {
 
     private fun loadNewRound(data: List<Verb>) {
 
-        // Выбираем случайный глагол
         val entries = buildAntonymVerbMap(data).toList()
         val pair = entries[random.nextInt(entries.size)]
-        currentWord = pair.first
-        val correctAnswer = pair.second
 
-        tvVerb.text = currentWord
+        viewModel.antonymTestCurrentWord = pair.first
+        viewModel.antonymTestCorrectAnswer = pair.second
 
-        // Собираем варианты
         val allOptions = mutableListOf<String>()
-        allOptions.add(correctAnswer)
+        allOptions.add(viewModel.antonymTestCorrectAnswer)
 
-        // Добавляем 3 случайных неправильных
         while (allOptions.size < 4) {
             val candidate = entries[random.nextInt(entries.size)].second
-            if (candidate != correctAnswer && !allOptions.contains(candidate)) {
+            if (
+                candidate != viewModel.antonymTestCorrectAnswer &&
+                !allOptions.contains(candidate)
+            ) {
                 allOptions.add(candidate)
             }
         }
 
-        // Перемешиваем кнопки
         allOptions.shuffle()
+        viewModel.antonymTestCurrentOptions = allOptions
 
-        // Устанавливаем тексты и обработчики клика
+        restoreRound()
+    }
+
+    private fun restoreRound() {
+        tvVerb.text = viewModel.antonymTestCurrentWord
+
         buttons.forEachIndexed { index, button ->
-            button.text = allOptions[index]
+            button.text = viewModel.antonymTestCurrentOptions[index]
+
             button.setOnClickListener {
-                if (button.text == correctAnswer) {
-                    // Правильно → загружаем следующий
-                    loadNewRound(data)
+                if (button.text == viewModel.antonymTestCorrectAnswer) {
+                    loadNewRound(viewModel.dataList.value ?: emptyList())
                 } else {
-                    // Неправильно → подсветка
                     button.setBackgroundColor(Color.RED)
                 }
             }
+
             button.setBackgroundColor(Color.LTGRAY)
         }
     }
@@ -109,7 +121,7 @@ class AntonymsTestFragment : Fragment() {
         for (entry in entries) {
             for (meaning in entry.meanings) {
                 if (meaning.antonymId != 0) {
-                    val antonymEntry = entryById.get(meaning.antonymId.toInt())
+                    val antonymEntry = entryById[meaning.antonymId.toInt()]
                     if (antonymEntry != null) {
                         val thisWord = entry.writing
                         val antonymWord = antonymEntry.writing

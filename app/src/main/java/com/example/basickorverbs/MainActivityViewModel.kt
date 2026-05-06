@@ -18,6 +18,12 @@ class MainActivityViewModel: ViewModel() {
 
     val dataList: LiveData<List<Verb>> = _dataList
 
+
+    // antonym test
+    var antonymTestCurrentWord: String = ""
+    var antonymTestCorrectAnswer: String = ""
+    var antonymTestCurrentOptions: List<String> = emptyList()
+
     fun getVerbListFromString(context: Context): List<Verb>? {
 
         val string = readJsonFileFromAssets(context, "jsonVerbList.json")
