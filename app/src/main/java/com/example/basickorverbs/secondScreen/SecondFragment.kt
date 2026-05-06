@@ -34,8 +34,7 @@ class SecondFragment : Fragment() {
 
         val position = arguments?.getInt("verbPosition")
 
-        val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
-            .get(MainActivityViewModel::class.java)
+        val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
 
         if (position != null) {
             initRecyclerView(viewModel, position)

@@ -38,8 +38,7 @@ class FirstFragment : Fragment() {
 
         binding.recyclerViewFirstFragment.layoutManager = GridLayoutManager(requireContext(), 3)
 
-        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
-            .get(MainActivityViewModel::class.java)
+        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
 
         viewmodel.dataList
             .observe(viewLifecycleOwner) { data ->

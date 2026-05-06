@@ -43,8 +43,7 @@ class ThirdFragment : Fragment() {
         val meaningPosition = arguments?.getInt("meaningPosition")
 
         (if (meaningPosition != null && verbPosition != null) {
-            ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
-                .get(MainActivityViewModel::class.java)
+            ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
                 .dataList
                 .value
                 ?.find {

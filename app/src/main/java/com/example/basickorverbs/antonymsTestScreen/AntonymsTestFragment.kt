@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
 import com.example.basickorverbs.domain.Verb
@@ -21,15 +22,6 @@ class AntonymsTestFragment : Fragment() {
 
     private lateinit var tvVerb: TextView
     private lateinit var buttons: List<Button>
-
-    // Пример словаря антонимов
-    private val antonyms = mapOf(
-        "크다" to "작다",
-        "열다" to "닫다",
-        "빠르다" to "느리다",
-        "시작하다" to "끝내다",
-        "올라가다" to "내려가다"
-    )
 
     private val random = Random
     private var currentWord: String = ""
@@ -41,11 +33,7 @@ class AntonymsTestFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_antonym_training, container, false)
 
         tvVerb = view.findViewById(R.id.tvVerb)
-/*        tvVerb.setOnDoubleClickListener {
-            val action =
-                .actionTrainingFragmentToVerbDetailsFragment(currentVerbId)
-            findNavController().navigate(action)
-        }*/
+
         buttons = listOf(
             view.findViewById(R.id.btnOption1),
             view.findViewById(R.id.btnOption2),
@@ -53,15 +41,22 @@ class AntonymsTestFragment : Fragment() {
             view.findViewById(R.id.btnOption4)
         )
 
-        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())
-            .get(MainActivityViewModel::class.java)
+        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
 
         viewmodel.dataList
             .observe(viewLifecycleOwner) { data ->
+
                 loadNewRound(data)
+
+                //finds the right verb and let's us go to the second frag with list of meanings
+                val verb = data.find { it.writing == currentWord }
+                val bundle = Bundle()
+                bundle.putInt("verbPosition", data.indexOf(verb))
+
+                tvVerb.setOnDoubleClickListener {
+                    findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
+                }
             }
-
-
 
         return view
     }
@@ -107,7 +102,7 @@ class AntonymsTestFragment : Fragment() {
         }
     }
 
-    fun buildAntonymVerbMap(entries: List<Verb>): Set<Pair<String, String>> {
+    private fun buildAntonymVerbMap(entries: List<Verb>): Set<Pair<String, String>> {
         val entryById = entries.associateBy { it.id }
         val pairs = mutableSetOf<Pair<String, String>>()
 
