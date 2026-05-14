@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.databinding.FragmentSecondBinding
+import com.example.basickorverbs.domain.Verb
 
 /**
  * A simple [Fragment] to show a list of meanings for a chosen korean verb.
@@ -61,7 +62,7 @@ class SecondFragment : Fragment() {
                                 verb.id,
                                 verb.meanings
                             )
-                            setScreenTitle(verb.writing)
+                            setScreenTitle(verb)
                         }
                         binding.recyclerViewSecondFragment.adapter = adapter
                     }
@@ -69,7 +70,9 @@ class SecondFragment : Fragment() {
             }
     }
 
-    private fun setScreenTitle(verbWriting: String) {
-        (activity as? AppCompatActivity)?.supportActionBar?.title = verbWriting
+    private fun setScreenTitle(verb: Verb) = if (verb.writing == verb.actualPronunciation) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = verb.writing
+    } else {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = verb.writing.plus(" [${verb.actualPronunciation}]")
     }
 }

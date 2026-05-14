@@ -35,12 +35,7 @@ class AntonymsTestFragment : Fragment() {
 
         tvVerb = view.findViewById(R.id.tvVerb)
 
-        buttons = listOf(
-            view.findViewById(R.id.btnOption1),
-            view.findViewById(R.id.btnOption2),
-            view.findViewById(R.id.btnOption3),
-            view.findViewById(R.id.btnOption4)
-        )
+        initButtons(view)
 
         viewModel = ViewModelProvider(
             requireActivity(),
@@ -55,18 +50,56 @@ class AntonymsTestFragment : Fragment() {
                 } else {
                     restoreRound()
                 }
-
-                //finds the right verb and let's us go to the second frag with list of meanings
-                val verb = data.find { it.writing == viewModel.antonymTestCurrentWord }
-                val bundle = Bundle()
-                bundle.putInt("verbPosition", data.indexOf(verb))
-
-                tvVerb.setOnDoubleClickListener {
-                    findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
-                }
             }
 
         return view
+    }
+
+    private fun initButtons(view: View) {
+        buttons = listOf(
+            view.findViewById(R.id.btnOption1),
+            view.findViewById(R.id.btnOption2),
+            view.findViewById(R.id.btnOption3),
+            view.findViewById(R.id.btnOption4)
+        )
+    }
+
+    private fun setDoubleClickNavigation(data: List<Verb>) {
+
+        //finds the right verb and let's us go to the second fragment with list of meanings
+        val verb = data.find { it.writing == viewModel.antonymTestCurrentWord }
+        val bundle = Bundle()
+        bundle.putInt("verbPosition", data.indexOf(verb))
+
+        tvVerb.setOnDoubleClickListener {
+            findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
+        }
+    }
+
+    private fun setOnLongPressOptionWordNavigation(data: List<Verb>) {
+
+        buttons.forEach { button: Button ->
+            button.setOnLongTapAndOnClickListeners(
+                onLongPress = {
+                    val verb = data.find {
+                        it.writing == button.text
+                    }
+                    val bundle = Bundle()
+                    bundle.putInt("verbPosition", data.indexOf(verb))
+
+                    findNavController().navigate(
+                        R.id.action_test_antonyms_to_SecondFragment,
+                        bundle
+                    )
+                }, onClick = {
+                    if (button.text == viewModel.antonymTestCorrectAnswer) {
+                        loadNewRound(viewModel.dataList.value ?: emptyList())
+                    } else {
+                        button.setBackgroundColor(Color.RED)
+                    }
+                }
+            )
+        }
     }
 
     private fun loadNewRound(data: List<Verb>) {
@@ -76,6 +109,9 @@ class AntonymsTestFragment : Fragment() {
 
         viewModel.antonymTestCurrentWord = pair.first
         viewModel.antonymTestCorrectAnswer = pair.second
+
+        setDoubleClickNavigation(data)
+        setOnLongPressOptionWordNavigation(data)
 
         val allOptions = mutableListOf<String>()
         allOptions.add(viewModel.antonymTestCorrectAnswer)
@@ -102,13 +138,8 @@ class AntonymsTestFragment : Fragment() {
         buttons.forEachIndexed { index, button ->
             button.text = viewModel.antonymTestCurrentOptions[index]
 
-            button.setOnClickListener {
-                if (button.text == viewModel.antonymTestCorrectAnswer) {
-                    loadNewRound(viewModel.dataList.value ?: emptyList())
-                } else {
-                    button.setBackgroundColor(Color.RED)
-                }
-            }
+            setDoubleClickNavigation(viewModel.dataList.value ?: emptyList())
+            setOnLongPressOptionWordNavigation(viewModel.dataList.value ?: emptyList())
 
             button.setBackgroundColor(Color.LTGRAY)
         }
@@ -137,17 +168,40 @@ class AntonymsTestFragment : Fragment() {
                 }
             }
         }
+
         return pairs
     }
 
     @SuppressLint("ClickableViewAccessibility")
     fun TextView.setOnDoubleClickListener(onDoubleClick: () -> Unit) {
-        val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                onDoubleClick()
-                return true
-            }
-        })
+        val gestureDetector =
+            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    onDoubleClick()
+                    return true
+                }
+            })
+
+        setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun Button.setOnLongTapAndOnClickListeners(onLongPress: () -> Unit, onClick: () -> Unit) {
+        val gestureDetector =
+            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onLongPress(e: MotionEvent) {
+                    onLongPress()
+                    super.onLongPress(e)
+                }
+
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    onClick()
+                    return super.onSingleTapConfirmed(e)
+                }
+            })
 
         setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)

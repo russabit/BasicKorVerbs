@@ -16,26 +16,35 @@
 
     <Button
         android:id="@+id/btnOption1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вариант 1" />
+        android:text="Вариант 1"
+        android:layout_marginVertical="@dimen/fab_margin"
+        android:textSize="9pt"
+        />
 
     <Button
         android:id="@+id/btnOption2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вариант 2" />
+        android:text="Вариант 2"
+        android:layout_marginVertical="@dimen/fab_margin"
+        android:textSize="9pt"/>
 
     <Button
         android:id="@+id/btnOption3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вариант 3" />
+        android:text="Вариант 3"
+        android:layout_marginVertical="@dimen/fab_margin"
+        android:textSize="9pt" />
 
     <Button
         android:id="@+id/btnOption4"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вариант 4" />
+        android:text="Вариант 4"
+        android:layout_marginVertical="@dimen/fab_margin"
+        android:textSize="9pt" />
 
 </LinearLayout>

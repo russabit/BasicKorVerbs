@@ -57,7 +57,7 @@ class ExampleTrainingFragment : Fragment() {
                 btnShowAntonym.setOnClickListener {
                     val antonymId = currentMeaning?.antonymId ?: 0
                     if (antonymId != 0) {
-                        val antonymVerb = data.find { it.id == antonymId }
+                        val antonymVerb = data.find { it.id == antonymId.toInt() }
                         tvAnswer.text = "Антоним: ${antonymVerb?.writing ?: "нет"}"
                     } else {
                         tvAnswer.text = "Антоним отсутствует"
