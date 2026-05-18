@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.basickorverbs.data.VerbRepository
+import com.example.basickorverbs.domain.Antonym
 import com.example.basickorverbs.domain.Verb
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,10 +20,18 @@ class MainActivityViewModel: ViewModel() {
     val dataList: LiveData<List<Verb>> = _dataList
 
 
-    // antonym test
-    var antonymTestCurrentWord: String = ""
-    var antonymTestCorrectAnswer: String = ""
-    var antonymTestCurrentOptions: List<String> = emptyList()
+    // antonym init
+    var antonym = Antonym(Pair("",""), emptyList())
+    // number of round played now
+    var currentRound = 1
+    // список списков?
+    var antonymHistory: ArrayList<Antonym>? = null
+
+    fun getBackOneSet() {
+        antonymHistory?.get(currentRound.minus(1))
+        // trigger change in livedata
+        _dataList.value = dataList.value
+    }
 
     fun getVerbListFromString(context: Context): List<Verb>? {
 
@@ -30,7 +39,7 @@ class MainActivityViewModel: ViewModel() {
 
         return string
             ?.let { VerbRepository().convertJsonToVerbList(it) }
-            .also { _dataList.value = it }
+            .also { _dataList.value = it?.shuffled() }
 
     }
 

@@ -10,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
+import com.example.basickorverbs.domain.Antonym
 import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.domain.buildAntonymVerbMap
 import kotlin.random.Random
 
 class AntonymsTestFragment : Fragment() {
@@ -45,7 +49,7 @@ class AntonymsTestFragment : Fragment() {
         viewModel.dataList
             .observe(viewLifecycleOwner) { data ->
 
-                if (viewModel.antonymTestCurrentWord.isEmpty()) {
+                if (viewModel.antonymHistory.isNullOrEmpty()) {
                     loadNewRound(data)
                 } else {
                     restoreRound()
@@ -67,7 +71,7 @@ class AntonymsTestFragment : Fragment() {
     private fun setDoubleClickNavigation(data: List<Verb>) {
 
         //finds the right verb and let's us go to the second fragment with list of meanings
-        val verb = data.find { it.writing == viewModel.antonymTestCurrentWord }
+        val verb = data.find { it.writing == viewModel.antonym.questionAndAnswerPair.first }
         val bundle = Bundle()
         bundle.putInt("verbPosition", data.indexOf(verb))
 
@@ -92,7 +96,8 @@ class AntonymsTestFragment : Fragment() {
                         bundle
                     )
                 }, onClick = {
-                    if (button.text == viewModel.antonymTestCorrectAnswer) {
+                    if (button.text == viewModel.antonym.questionAndAnswerPair.second) {
+                        viewModel.currentRound++
                         loadNewRound(viewModel.dataList.value ?: emptyList())
                     } else {
                         button.setBackgroundColor(Color.RED)
@@ -107,19 +112,31 @@ class AntonymsTestFragment : Fragment() {
         val entries = buildAntonymVerbMap(data).toList()
         val pair = entries[random.nextInt(entries.size)]
 
-        viewModel.antonymTestCurrentWord = pair.first
-        viewModel.antonymTestCorrectAnswer = pair.second
+        viewModel.antonym.questionAndAnswerPair = pair
 
-        setDoubleClickNavigation(data)
-        setOnLongPressOptionWordNavigation(data)
+        val allOptions = createAnswerOptions(entries)
 
+        viewModel.antonym.listOfAnswerOptions = allOptions
+
+        // init the list (can be better)
+        if (viewModel.antonymHistory.isNullOrEmpty()) { viewModel.antonymHistory = ArrayList(5)
+        }
+
+        viewModel.antonymHistory?.add(Antonym(pair, allOptions))
+
+        setOnToolbarBackArrowPressedNavigation()
+
+        restoreRound()
+    }
+
+    private fun createAnswerOptions(entries: List<Pair<String, String>>): MutableList<String> {
         val allOptions = mutableListOf<String>()
-        allOptions.add(viewModel.antonymTestCorrectAnswer)
+        allOptions.add(viewModel.antonym.questionAndAnswerPair.second)
 
         while (allOptions.size < 4) {
             val candidate = entries[random.nextInt(entries.size)].second
             if (
-                candidate != viewModel.antonymTestCorrectAnswer &&
+                candidate != viewModel.antonym.questionAndAnswerPair.second &&
                 !allOptions.contains(candidate)
             ) {
                 allOptions.add(candidate)
@@ -127,16 +144,27 @@ class AntonymsTestFragment : Fragment() {
         }
 
         allOptions.shuffle()
-        viewModel.antonymTestCurrentOptions = allOptions
+        return allOptions
+    }
 
-        restoreRound()
+    private fun setOnToolbarBackArrowPressedNavigation() {
+        (activity as? AppCompatActivity)?.onBackPressedDispatcher?.addCallback {
+            goBackOneRound()
+        }
+    }
+
+    private fun goBackOneRound() {
+        viewModel.getBackOneSet()
     }
 
     private fun restoreRound() {
-        tvVerb.text = viewModel.antonymTestCurrentWord
+        setCurrentWordTextView()
+        setButtonsTextsAndOnLongPressNavigation()
+    }
 
+    private fun setButtonsTextsAndOnLongPressNavigation() {
         buttons.forEachIndexed { index, button ->
-            button.text = viewModel.antonymTestCurrentOptions[index]
+            button.text = viewModel.antonym.listOfAnswerOptions[index]
 
             setDoubleClickNavigation(viewModel.dataList.value ?: emptyList())
             setOnLongPressOptionWordNavigation(viewModel.dataList.value ?: emptyList())
@@ -145,31 +173,8 @@ class AntonymsTestFragment : Fragment() {
         }
     }
 
-    private fun buildAntonymVerbMap(entries: List<Verb>): Set<Pair<String, String>> {
-        val entryById = entries.associateBy { it.id }
-        val pairs = mutableSetOf<Pair<String, String>>()
-
-        for (entry in entries) {
-            for (meaning in entry.meanings) {
-                if (meaning.antonymId != 0) {
-                    val antonymEntry = entryById[meaning.antonymId.toInt()]
-                    if (antonymEntry != null) {
-                        val thisWord = entry.writing
-                        val antonymWord = antonymEntry.writing
-
-                        val normalizedPair = if (thisWord < antonymWord) {
-                            thisWord to antonymWord
-                        } else {
-                            antonymWord to thisWord
-                        }
-
-                        pairs.add(normalizedPair)
-                    }
-                }
-            }
-        }
-
-        return pairs
+    private fun setCurrentWordTextView() {
+        tvVerb.text = viewModel.antonym.questionAndAnswerPair.first
     }
 
     @SuppressLint("ClickableViewAccessibility")

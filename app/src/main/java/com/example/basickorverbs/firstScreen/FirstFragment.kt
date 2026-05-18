@@ -36,7 +36,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerViewFirstFragment.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.recyclerViewFirstFragment.layoutManager = GridLayoutManager(requireContext(), 2)
 
         val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
 
