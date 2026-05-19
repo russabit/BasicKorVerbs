@@ -66,18 +66,6 @@ class AntonymsTestFragment : Fragment() {
         )
     }
 
-    private fun setDoubleClickNavigation(data: List<Verb>) {
-
-        //finds the right verb and let's us go to the second fragment with list of meanings
-        val verb = data.find { it.writing == viewModel.antonym.questionAndAnswerPair.first }
-        val bundle = Bundle()
-        bundle.putInt("verbPosition", data.indexOf(verb))
-
-        tvVerb.setOnDoubleClickListener {
-            findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
-        }
-    }
-
     private fun setOnLongPressOptionWordNavigation(data: List<Verb>) {
 
         buttons.forEach { button: Button ->
@@ -118,14 +106,12 @@ class AntonymsTestFragment : Fragment() {
 
     private fun restoreRound() {
         setCurrentWordTextView()
-        setButtonsTextsAndOnLongPressNavigation()
+        setOptionButtons()
     }
 
-    private fun setButtonsTextsAndOnLongPressNavigation() {
+    private fun setOptionButtons() {
         buttons.forEachIndexed { index, button ->
             button.text = viewModel.antonym.listOfAnswerOptions[index]
-
-            setDoubleClickNavigation(viewModel.dataList.value ?: emptyList())
             setOnLongPressOptionWordNavigation(viewModel.dataList.value ?: emptyList())
 
             button.setBackgroundColor(Color.LTGRAY)
@@ -133,7 +119,18 @@ class AntonymsTestFragment : Fragment() {
     }
 
     private fun setCurrentWordTextView() {
+        // set text
         tvVerb.text = viewModel.antonym.questionAndAnswerPair.first
+
+        // set navigation
+        tvVerb.setOnDoubleClickListener {
+            //finds the right verb and let's us go to the second fragment with list of meanings
+            val verb = viewModel.dataList.value?.find { it.writing == viewModel.antonym.questionAndAnswerPair.first }
+            val bundle = Bundle()
+            viewModel.dataList.value?.let { bundle.putInt("verbPosition", it.indexOf(verb)) }
+
+            findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
+        }
     }
 
     // get rid of this and do both longpress
@@ -141,9 +138,16 @@ class AntonymsTestFragment : Fragment() {
     fun TextView.setOnDoubleClickListener(onDoubleClick: () -> Unit) {
         val gestureDetector =
             GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+
+                //maybe remove
                 override fun onDoubleTap(e: MotionEvent): Boolean {
                     onDoubleClick()
                     return true
+                }
+
+                override fun onLongPress(e: MotionEvent) {
+                    onDoubleClick()
+                    super.onLongPress(e)
                 }
             })
 
