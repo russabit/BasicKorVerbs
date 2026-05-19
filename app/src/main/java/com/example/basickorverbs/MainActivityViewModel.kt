@@ -8,22 +8,27 @@ import androidx.lifecycle.ViewModel
 import com.example.basickorverbs.data.VerbRepository
 import com.example.basickorverbs.domain.Antonym
 import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.domain.buildAntonymVerbMap
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import kotlin.random.Random
 
-class MainActivityViewModel: ViewModel() {
+class MainActivityViewModel : ViewModel() {
 
     private val _dataList = MutableLiveData<List<Verb>>()
-
     val dataList: LiveData<List<Verb>> = _dataList
+
+    private val random = Random
 
 
     // antonym init
-    var antonym = Antonym(Pair("",""), emptyList())
+    var antonym = Antonym(Pair("", ""), emptyList())
+
     // number of round played now
     var currentRound = 1
+
     // список списков?
     var antonymHistory: ArrayList<Antonym>? = null
 
@@ -33,32 +38,32 @@ class MainActivityViewModel: ViewModel() {
         _dataList.value = dataList.value
     }
 
-    fun getVerbListFromString(context: Context): List<Verb>? {
+    fun triggerGettingVerbList(context: Context) {
 
-        val string = readJsonFileFromAssets(context, "jsonVerbList.json")
-
-        return string
-            ?.let { VerbRepository().convertJsonToVerbList(it) }
+        readJsonFileFromAssets(
+            context,
+            "jsonVerbList.json"
+        )?.let { VerbRepository().convertJsonToVerbList(it) }
             .also { _dataList.value = it?.shuffled() }
-
     }
 
-    fun callServer() = VerbRepository().verbApiService.getVerbs().enqueue(object : Callback<List<Verb>> {
+    fun callServer() =
+        VerbRepository().verbApiService.getVerbs().enqueue(object : Callback<List<Verb>> {
 
-        override fun onResponse(call: Call<List<Verb>>, response: Response<List<Verb>>) {
-            if (response.isSuccessful) {
-                _dataList.value = response.body() ?: emptyList()
-            } else {
-                // Обработка ошибки
-                Log.e("API Error", response.message() ?: "Unknown error")
+            override fun onResponse(call: Call<List<Verb>>, response: Response<List<Verb>>) {
+                if (response.isSuccessful) {
+                    _dataList.value = response.body() ?: emptyList()
+                } else {
+                    // Обработка ошибки
+                    Log.e("API Error", response.message() ?: "Unknown error")
+                }
             }
-        }
 
-        override fun onFailure(call: Call<List<Verb>>, t: Throwable) {
-            // Обработка ошибки
-            Log.e("API Error", t.message ?: "Unknown error")
-        }
-    })
+            override fun onFailure(call: Call<List<Verb>>, t: Throwable) {
+                // Обработка ошибки
+                Log.e("API Error", t.message ?: "Unknown error")
+            }
+        })
 
     private fun readJsonFileFromAssets(context: Context, fileName: String): String? {
         return try {
@@ -72,6 +77,43 @@ class MainActivityViewModel: ViewModel() {
             e.printStackTrace()
             null
         }
+    }
+
+    private fun createAnswerOptions(entries: List<Pair<String, String>>): MutableList<String> {
+        val allOptions = mutableListOf<String>()
+        allOptions.add(antonym.questionAndAnswerPair.second)
+
+        while (allOptions.size < 4) {
+            val candidate = entries[random.nextInt(entries.size)].second
+            if (
+                candidate != antonym.questionAndAnswerPair.second &&
+                !allOptions.contains(candidate)
+            ) {
+                allOptions.add(candidate)
+            }
+        }
+
+        allOptions.shuffle()
+        return allOptions
+    }
+
+    fun loadNewRound(data: List<Verb>) {
+
+        val entries = buildAntonymVerbMap(data).toList()
+        val pair = entries[random.nextInt(entries.size)]
+
+        antonym.questionAndAnswerPair = pair
+
+        val allOptions = createAnswerOptions(entries)
+
+        antonym.listOfAnswerOptions = allOptions
+
+        // init the list (can be better)
+        if (antonymHistory.isNullOrEmpty()) {
+            antonymHistory = ArrayList(5)
+        }
+
+        antonymHistory?.add(Antonym(pair, allOptions))
     }
 
 }

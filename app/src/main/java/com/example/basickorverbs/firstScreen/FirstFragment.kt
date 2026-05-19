@@ -38,18 +38,18 @@ class FirstFragment : Fragment() {
 
         binding.recyclerViewFirstFragment.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val viewmodel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[MainActivityViewModel::class.java]
+        val viewmodel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.NewInstanceFactory()
+        )[MainActivityViewModel::class.java]
+
+        context?.let { viewmodel.triggerGettingVerbList(it) }
 
         viewmodel.dataList
             .observe(viewLifecycleOwner) { data ->
                 adapter = FirstScreenAdapter(data)
                 binding.recyclerViewFirstFragment.adapter = adapter
             }
-
-        binding.recyclerViewFirstFragment.adapter = this.context?.let { context ->
-            viewmodel.getVerbListFromString(context)
-                ?.let { FirstScreenAdapter(it) }
-        }
     }
 
     override fun onDestroyView() {

@@ -17,17 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
-import com.example.basickorverbs.domain.Antonym
 import com.example.basickorverbs.domain.Verb
-import com.example.basickorverbs.domain.buildAntonymVerbMap
-import kotlin.random.Random
 
 class AntonymsTestFragment : Fragment() {
 
     private lateinit var tvVerb: TextView
     private lateinit var buttons: List<Button>
 
-    private val random = Random
 
     private lateinit var viewModel: MainActivityViewModel
 
@@ -50,7 +46,9 @@ class AntonymsTestFragment : Fragment() {
             .observe(viewLifecycleOwner) { data ->
 
                 if (viewModel.antonymHistory.isNullOrEmpty()) {
-                    loadNewRound(data)
+                    viewModel.loadNewRound(data)
+                    setOnToolbarBackArrowPressedNavigation()
+                    restoreRound()
                 } else {
                     restoreRound()
                 }
@@ -98,53 +96,14 @@ class AntonymsTestFragment : Fragment() {
                 }, onClick = {
                     if (button.text == viewModel.antonym.questionAndAnswerPair.second) {
                         viewModel.currentRound++
-                        loadNewRound(viewModel.dataList.value ?: emptyList())
+                        viewModel.loadNewRound(viewModel.dataList.value ?: emptyList())
+                        restoreRound()
                     } else {
                         button.setBackgroundColor(Color.RED)
                     }
                 }
             )
         }
-    }
-
-    private fun loadNewRound(data: List<Verb>) {
-
-        val entries = buildAntonymVerbMap(data).toList()
-        val pair = entries[random.nextInt(entries.size)]
-
-        viewModel.antonym.questionAndAnswerPair = pair
-
-        val allOptions = createAnswerOptions(entries)
-
-        viewModel.antonym.listOfAnswerOptions = allOptions
-
-        // init the list (can be better)
-        if (viewModel.antonymHistory.isNullOrEmpty()) { viewModel.antonymHistory = ArrayList(5)
-        }
-
-        viewModel.antonymHistory?.add(Antonym(pair, allOptions))
-
-        setOnToolbarBackArrowPressedNavigation()
-
-        restoreRound()
-    }
-
-    private fun createAnswerOptions(entries: List<Pair<String, String>>): MutableList<String> {
-        val allOptions = mutableListOf<String>()
-        allOptions.add(viewModel.antonym.questionAndAnswerPair.second)
-
-        while (allOptions.size < 4) {
-            val candidate = entries[random.nextInt(entries.size)].second
-            if (
-                candidate != viewModel.antonym.questionAndAnswerPair.second &&
-                !allOptions.contains(candidate)
-            ) {
-                allOptions.add(candidate)
-            }
-        }
-
-        allOptions.shuffle()
-        return allOptions
     }
 
     private fun setOnToolbarBackArrowPressedNavigation() {
@@ -177,6 +136,7 @@ class AntonymsTestFragment : Fragment() {
         tvVerb.text = viewModel.antonym.questionAndAnswerPair.first
     }
 
+    // get rid of this and do both longpress
     @SuppressLint("ClickableViewAccessibility")
     fun TextView.setOnDoubleClickListener(onDoubleClick: () -> Unit) {
         val gestureDetector =
