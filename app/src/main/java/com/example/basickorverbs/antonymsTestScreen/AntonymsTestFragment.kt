@@ -25,7 +25,8 @@ class AntonymsTestFragment : Fragment() {
     private lateinit var buttons: List<Button>
 
 
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var activityViewModel: MainActivityViewModel
+    private lateinit var fragmentViewModel: AntonymsTestFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +38,21 @@ class AntonymsTestFragment : Fragment() {
 
         initButtons(view)
 
-        viewModel = ViewModelProvider(
+        activityViewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.NewInstanceFactory()
         )[MainActivityViewModel::class.java]
 
-        viewModel.dataList
+        fragmentViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.NewInstanceFactory()
+        )[AntonymsTestFragmentViewModel::class.java]
+
+        activityViewModel.dataList
             .observe(viewLifecycleOwner) { data ->
 
-                if (viewModel.antonymHistory.isNullOrEmpty()) {
-                    viewModel.loadNewRound(data)
+                if (fragmentViewModel.isItTheFirstGame()) {
+                    fragmentViewModel.loadNewRound(data)
                     setOnToolbarBackArrowPressedNavigation()
                     restoreRound()
                 } else {
@@ -82,9 +88,8 @@ class AntonymsTestFragment : Fragment() {
                         bundle
                     )
                 }, onClick = {
-                    if (button.text == viewModel.antonym.questionAndAnswerPair.second) {
-                        viewModel.currentRound++
-                        viewModel.loadNewRound(viewModel.dataList.value ?: emptyList())
+                    if (isAnswerRight(button.text)) {
+                        fragmentViewModel.onAnsweringRight(data)
                         restoreRound()
                     } else {
                         button.setBackgroundColor(Color.RED)
@@ -94,6 +99,9 @@ class AntonymsTestFragment : Fragment() {
         }
     }
 
+    private fun isAnswerRight(text: CharSequence) =
+        text.toString() == fragmentViewModel.antonym.questionAndAnswerPair.second
+
     private fun setOnToolbarBackArrowPressedNavigation() {
         (activity as? AppCompatActivity)?.onBackPressedDispatcher?.addCallback {
             goBackOneRound()
@@ -101,7 +109,7 @@ class AntonymsTestFragment : Fragment() {
     }
 
     private fun goBackOneRound() {
-        viewModel.getBackOneSet()
+        fragmentViewModel.getBackOneSet()
     }
 
     private fun restoreRound() {
@@ -111,8 +119,9 @@ class AntonymsTestFragment : Fragment() {
 
     private fun setOptionButtons() {
         buttons.forEachIndexed { index, button ->
-            button.text = viewModel.antonym.listOfAnswerOptions[index]
-            setOnLongPressOptionWordNavigation(viewModel.dataList.value ?: emptyList())
+            button.text = fragmentViewModel.antonym.listOfAnswerOptions[index]
+
+            setOnLongPressOptionWordNavigation(activityViewModel.dataList.value ?: emptyList())
 
             button.setBackgroundColor(Color.LTGRAY)
         }
@@ -120,14 +129,20 @@ class AntonymsTestFragment : Fragment() {
 
     private fun setCurrentWordTextView() {
         // set text
-        tvVerb.text = viewModel.antonym.questionAndAnswerPair.first
+        tvVerb.text = fragmentViewModel.antonym.questionAndAnswerPair.first
 
         // set navigation
         tvVerb.setOnDoubleClickListener {
             //finds the right verb and let's us go to the second fragment with list of meanings
-            val verb = viewModel.dataList.value?.find { it.writing == viewModel.antonym.questionAndAnswerPair.first }
+            val verb =
+                activityViewModel.dataList.value?.find { it.writing == fragmentViewModel.antonym.questionAndAnswerPair.first }
             val bundle = Bundle()
-            viewModel.dataList.value?.let { bundle.putInt("verbPosition", it.indexOf(verb)) }
+            activityViewModel.dataList.value?.let {
+                bundle.putInt(
+                    "verbPosition",
+                    it.indexOf(verb)
+                )
+            }
 
             findNavController().navigate(R.id.action_test_antonyms_to_SecondFragment, bundle)
         }
