@@ -22,6 +22,7 @@ import com.example.basickorverbs.domain.Verb
 class AntonymsTestFragment : Fragment() {
 
     private lateinit var tvVerb: TextView
+    private lateinit var tvRound: TextView
     private lateinit var buttons: List<Button>
 
 
@@ -35,6 +36,7 @@ class AntonymsTestFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_antonym_training, container, false)
 
         tvVerb = view.findViewById(R.id.tvVerb)
+        tvRound = view.findViewById(R.id.tvRoundCount)
 
         initButtons(view)
 
@@ -123,6 +125,7 @@ class AntonymsTestFragment : Fragment() {
 
             setOnLongPressOptionWordNavigation(activityViewModel.dataList.value ?: emptyList())
 
+            // todo save wrong picked options red colored
             button.setBackgroundColor(Color.LTGRAY)
         }
     }
@@ -130,6 +133,7 @@ class AntonymsTestFragment : Fragment() {
     private fun setCurrentWordTextView() {
         // set text
         tvVerb.text = fragmentViewModel.antonym.questionAndAnswerPair.first
+        tvRound.text = fragmentViewModel.currentRound.toString() + " / " + fragmentViewModel.getTotalNumberOfRounds()
 
         // set navigation
         tvVerb.setOnDoubleClickListener {

@@ -9,9 +9,10 @@ import kotlin.random.Random
 class AntonymsTestFragmentViewModel : ViewModel() {
 
     private val random = Random
+    private var listOfPairs: List<Pair<String, String>> = emptyList()
 
     // number of round played now
-    private var currentRound = 1
+    var currentRound = 1
 
     // list of rounds played
     private var antonymHistory: ArrayList<Antonym>? = null
@@ -31,7 +32,12 @@ class AntonymsTestFragmentViewModel : ViewModel() {
 
     fun loadNewRound(data: List<Verb>) {
 
-        val entries = buildAntonymVerbMap(data).toList()
+        if (listOfPairs.isEmpty()) {
+            listOfPairs = buildAntonymVerbMap(data).toList()
+        }
+
+        val entries = listOfPairs
+
         val pair = entries[random.nextInt(entries.size)]
 
         antonym.questionAndAnswerPair = pair
@@ -72,4 +78,6 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     }
 
     fun isItTheFirstGame(): Boolean = antonymHistory.isNullOrEmpty()
+
+    fun getTotalNumberOfRounds() = listOfPairs.size
 }

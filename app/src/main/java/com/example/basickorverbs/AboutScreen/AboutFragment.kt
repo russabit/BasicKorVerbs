@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.basickorverbs.MainActivityViewModel
 import com.example.basickorverbs.R
 import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.domain.buildAntonymVerbMap
 
 class AboutFragment : Fragment() {
 
+    private lateinit var tvAntonymPairs: TextView
     private lateinit var tvVerbCount: TextView
     private lateinit var tvMeaningCount: TextView
     private lateinit var tvExampleCount: TextView
@@ -24,6 +26,7 @@ class AboutFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_about, container, false)
 
+        tvAntonymPairs = view.findViewById(R.id.tvAntonymPairsCount)
         tvVerbCount = view.findViewById(R.id.tvVerbCount)
         tvMeaningCount = view.findViewById(R.id.tvMeaningCount)
         tvExampleCount = view.findViewById(R.id.tvExampleCount)
@@ -41,10 +44,12 @@ class AboutFragment : Fragment() {
 
     private fun showStats(verbs: List<Verb>) {
         val verbCount = verbs.size
+        val pairsCount = buildAntonymVerbMap(verbs).toList().size
         val meaningCount = verbs.sumOf { it.meanings.size }
         val exampleCount = verbs.sumOf { verb -> verb.meanings.sumOf { it.examples.size } }
 
         tvVerbCount.text = "Глаголов: $verbCount"
+        tvAntonymPairs.text = "Антонимичных пар: $pairsCount"
         tvMeaningCount.text = "Значений: $meaningCount"
         tvExampleCount.text = "Примеров: $exampleCount"
     }

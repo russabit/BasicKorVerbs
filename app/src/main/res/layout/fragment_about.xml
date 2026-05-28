@@ -15,6 +15,14 @@
         android:layout_marginBottom="32dp" />
 
     <TextView
+        android:id="@+id/tvAntonymPairsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Антонимичных пар: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
         android:id="@+id/tvVerbCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
