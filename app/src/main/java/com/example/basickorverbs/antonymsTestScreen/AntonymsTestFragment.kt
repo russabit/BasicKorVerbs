@@ -40,6 +40,7 @@ class AntonymsTestFragment : Fragment() {
 
         initButtons(view)
 
+
         activityViewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.NewInstanceFactory()
@@ -50,16 +51,15 @@ class AntonymsTestFragment : Fragment() {
             ViewModelProvider.NewInstanceFactory()
         )[AntonymsTestFragmentViewModel::class.java]
 
+        setOnToolbarBackArrowPressedNavigation() // here?
+
         activityViewModel.dataList
             .observe(viewLifecycleOwner) { data ->
 
                 if (fragmentViewModel.isItTheFirstGame()) {
                     fragmentViewModel.loadNewRound(data)
-                    setOnToolbarBackArrowPressedNavigation()
-                    restoreRound()
-                } else {
-                    restoreRound()
                 }
+                restoreRound()
             }
 
         return view
@@ -107,11 +107,12 @@ class AntonymsTestFragment : Fragment() {
     private fun setOnToolbarBackArrowPressedNavigation() {
         (activity as? AppCompatActivity)?.onBackPressedDispatcher?.addCallback {
             goBackOneRound()
+            restoreRound()
         }
     }
 
     private fun goBackOneRound() {
-        fragmentViewModel.getBackOneSet()
+        fragmentViewModel.getBackOneSet(activityViewModel.dataList.value ?: emptyList())
     }
 
     private fun restoreRound() {
@@ -133,7 +134,10 @@ class AntonymsTestFragment : Fragment() {
     private fun setCurrentWordTextView() {
         // set text
         tvVerb.text = fragmentViewModel.antonym.questionAndAnswerPair.first
-        tvRound.text = fragmentViewModel.currentRound.toString() + " / " + fragmentViewModel.getTotalNumberOfRounds()
+
+        val currentRoundPlayed = fragmentViewModel.currentRound.plus(1)
+        tvRound.text =
+            currentRoundPlayed.toString() + " / " + fragmentViewModel.getTotalNumberOfRounds()
 
         // set navigation
         tvVerb.setOnDoubleClickListener {

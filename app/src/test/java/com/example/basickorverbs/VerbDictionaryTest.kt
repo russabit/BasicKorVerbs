@@ -150,4 +150,32 @@ class VerbDictionaryTest {
         }
     }
 
+    @Test
+    fun findDuplicateRussianTranslations() {
+
+        val duplicates =
+            verbs.flatMap { verb ->
+                verb.meanings.map {
+                    it.rusTranslation to verb
+                }
+            }
+                .groupBy(
+                    keySelector = { it.first },
+                    valueTransform = { it.second }
+                )
+                .filter { (_, verbs) ->
+                    verbs.size > 1
+                }
+
+        duplicates.forEach { (translation, verbs) ->
+
+            println("\nTranslation: $translation")
+
+            verbs.forEach {
+                println(
+                    "  id=${it.id}, writing=${it.writing}"
+                )
+            }
+        }
+    }
 }

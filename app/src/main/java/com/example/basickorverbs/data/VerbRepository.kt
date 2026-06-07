@@ -8,12 +8,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class VerbRepository {
 
-    val retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl("https://raw.githubusercontent.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val verbApiService = retrofit.create(VerbApiService::class.java)
+    val verbApiService: VerbApiService = retrofit.create(VerbApiService::class.java)
 
     fun convertJsonToVerbList(jsonString: String): List<Verb> {
 

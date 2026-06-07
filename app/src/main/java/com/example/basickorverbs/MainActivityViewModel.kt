@@ -20,11 +20,15 @@ class MainActivityViewModel : ViewModel() {
 
     fun triggerGettingVerbList(context: Context) {
 
-        readJsonFileFromAssets(
-            context,
-            "jsonVerbList.json"
-        )?.let { VerbRepository().convertJsonToVerbList(it) }
-            .also { _dataList.value = it?.shuffled() }
+        val dataListIsEmpty = _dataList.value == null
+
+        if (dataListIsEmpty) {
+            readJsonFileFromAssets(
+                context,
+                "jsonVerbList.json"
+            )?.let(VerbRepository()::convertJsonToVerbList)
+                .also { _dataList.value = it?.shuffled() }
+        }
     }
 
     fun callServer() =
