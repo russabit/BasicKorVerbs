@@ -57,7 +57,7 @@ class AntonymsTestFragment : Fragment() {
             .observe(viewLifecycleOwner) { data ->
 
                 if (fragmentViewModel.isItTheFirstGame()) {
-                    fragmentViewModel.loadNewRound(data)
+                    fragmentViewModel.loadRound(data)
                 }
                 restoreRound()
             }

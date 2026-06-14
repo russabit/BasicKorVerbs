@@ -9,7 +9,7 @@ import kotlin.random.Random
 class AntonymsTestFragmentViewModel : ViewModel() {
 
     private val random = Random
-    private var listOfPairs: List<Pair<String, String>> = emptyList()
+    private lateinit var listOfPairs: MutableList<Pair<String, String>>
 
     // number of round played now
     var currentRound = 0
@@ -28,37 +28,42 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     fun getBackOneSet(data: List<Verb>) {
         if (currentRound != 0) {
             currentRound--
-            antonymHistory[currentRound]
-            loadNewRound(data)
+            loadRound(data)
         }
     }
 
 
-    fun loadNewRound(data: List<Verb>) {
+    fun loadRound(data: List<Verb>) {
 
-        if (listOfPairs.isEmpty()) {
-            listOfPairs = buildAntonymVerbMap(data).toList()
+        if (!this::listOfPairs.isInitialized) {
+            listOfPairs = buildAntonymVerbMap(data).toMutableList()
         }
 
-        if (currentRound == antonymHistory.size) {
-            val entries = listOfPairs
+        val isThisRoundNew = currentRound == antonymHistory.size
 
-            val pair = entries[random.nextInt(entries.size)]
+        if (isThisRoundNew) loadNewRound() else loadPreviousRound()
 
-            antonym.questionAndAnswerPair = pair
+    }
 
-            val allOptions = createAnswerOptions(entries)
+    private fun loadPreviousRound() {
+        antonym.questionAndAnswerPair = antonymHistory[currentRound].questionAndAnswerPair
+        antonym.listOfAnswerOptions = antonymHistory[currentRound].listOfAnswerOptions
+    }
 
-            antonym.listOfAnswerOptions = allOptions
+    private fun loadNewRound() {
+        val entries = listOfPairs
 
-            antonymHistory.add(Antonym(pair, allOptions))
-        } else {
-            // load previous round
-            val previousRound = currentRound.minus(1)
-            antonym.questionAndAnswerPair = antonymHistory[previousRound].questionAndAnswerPair
-            antonym.listOfAnswerOptions = antonymHistory[previousRound].listOfAnswerOptions
-        }
+        val pair = entries[random.nextInt(entries.size)]
 
+        antonym.questionAndAnswerPair = pair
+
+        val allOptions = createAnswerOptions(entries)
+
+        antonym.listOfAnswerOptions = allOptions
+
+        antonymHistory.add(Antonym(pair, allOptions))
+
+        listOfPairs.remove(pair) // to get rid of possible doubles
     }
 
     private fun createAnswerOptions(entries: List<Pair<String, String>>): MutableList<String> {
@@ -81,7 +86,7 @@ class AntonymsTestFragmentViewModel : ViewModel() {
 
     fun onAnsweringRight(data: List<Verb>) {
         currentRound++
-        loadNewRound(data)
+        loadRound(data)
     }
 
     fun isItTheFirstGame(): Boolean = antonymHistory.isEmpty()

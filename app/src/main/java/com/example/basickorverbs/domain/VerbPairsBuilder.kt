@@ -2,7 +2,7 @@ package com.example.basickorverbs.domain
 
 fun buildAntonymVerbMap(entries: List<Verb>): Set<Pair<String, String>> {
     val entryById = entries.associateBy { it.id }
-    val pairs = mutableSetOf<Pair<String, String>>()
+    val pairs = LinkedHashSet<Pair<String, String>>(200)
 
     for (entry in entries) {
         for (meaning in entry.meanings) {
