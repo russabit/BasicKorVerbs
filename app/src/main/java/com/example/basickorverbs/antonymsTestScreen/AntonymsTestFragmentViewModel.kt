@@ -19,10 +19,7 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     private var antonymHistory: ArrayList<Antonym> = ArrayList(5)
 
     // antonym init
-    var antonym = Antonym(
-        questionAndAnswerPair = Pair("", ""),
-        listOfAnswerOptions = emptyList()
-    )
+    lateinit var antonym : Antonym
         private set
 
     fun getBackOneSet(data: List<Verb>) {
@@ -54,27 +51,25 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         val entries = listOfPairs
 
         val pair = entries[random.nextInt(entries.size)]
+        val allOptions = createAnswerOptions(entries, pair)
 
-        antonym.questionAndAnswerPair = pair
-
-        val allOptions = createAnswerOptions(entries)
-
-        antonym.listOfAnswerOptions = allOptions
+        antonym = Antonym(pair, allOptions)
 
         antonymHistory.add(Antonym(pair, allOptions))
 
         listOfPairs.remove(pair) // to get rid of possible doubles
     }
 
-    private fun createAnswerOptions(entries: List<Pair<String, String>>): MutableList<String> {
+    private fun createAnswerOptions(entries: List<Pair<String, String>>, pair: Pair<String, String>): MutableList<String> {
         val allOptions = mutableListOf<String>()
-        allOptions.add(antonym.questionAndAnswerPair.second)
+        allOptions.add(pair.second)
 
         while (allOptions.size < 4) {
             val candidate = entries[random.nextInt(entries.size)].second
             if (
-                candidate != antonym.questionAndAnswerPair.second &&
+                candidate != pair.second &&
                 !allOptions.contains(candidate)
+                // todo exclude synonym
             ) {
                 allOptions.add(candidate)
             }
