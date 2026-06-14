@@ -91,5 +91,5 @@ class AntonymsTestFragmentViewModel : ViewModel() {
 
     fun isItTheFirstGame(): Boolean = antonymHistory.isEmpty()
 
-    fun getTotalNumberOfRounds() = listOfPairs.size
+    fun getTotalNumberOfRounds() = listOfPairs.size + antonymHistory.size
 }
