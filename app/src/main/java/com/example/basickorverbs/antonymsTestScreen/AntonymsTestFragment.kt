@@ -40,7 +40,6 @@ class AntonymsTestFragment : Fragment() {
 
         initButtons(view)
 
-
         activityViewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.NewInstanceFactory()
@@ -57,9 +56,10 @@ class AntonymsTestFragment : Fragment() {
             .observe(viewLifecycleOwner) { data ->
 
                 if (fragmentViewModel.isItTheFirstGame()) {
-                    fragmentViewModel.loadRound(data)
+                    fragmentViewModel.initList(data)
                 }
-                restoreRound()
+                fragmentViewModel.loadRound()
+                setViewsAndButtons()
             }
 
         return view
@@ -91,8 +91,8 @@ class AntonymsTestFragment : Fragment() {
                     )
                 }, onClick = {
                     if (isAnswerRight(button.text)) {
-                        fragmentViewModel.onAnsweringRight(data)
-                        restoreRound()
+                        fragmentViewModel.onAnsweringRight()
+                        setViewsAndButtons()
                     } else {
                         button.setBackgroundColor(Color.RED)
                     }
@@ -107,15 +107,15 @@ class AntonymsTestFragment : Fragment() {
     private fun setOnToolbarBackArrowPressedNavigation() {
         (activity as? AppCompatActivity)?.onBackPressedDispatcher?.addCallback {
             goBackOneRound()
-            restoreRound()
+            setViewsAndButtons()
         }
     }
 
     private fun goBackOneRound() {
-        fragmentViewModel.getBackOneSet(activityViewModel.dataList.value ?: emptyList())
+        fragmentViewModel.getBackOneSet()
     }
 
-    private fun restoreRound() {
+    private fun setViewsAndButtons() {
         setCurrentWordTextView()
         setOptionButtons()
     }

@@ -22,25 +22,36 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     lateinit var antonym : Antonym
         private set
 
-    fun getBackOneSet(data: List<Verb>) {
+    fun getBackOneSet() {
         if (currentRound != 0) {
             currentRound--
-            loadRound(data)
+            loadRound()
         }
     }
 
-
-    fun loadRound(data: List<Verb>) {
-
+    fun initList(data: List<Verb>) {
         if (!this::listOfPairs.isInitialized) {
             listOfPairs = buildAntonymVerbMap(data).toMutableList()
         }
+    }
+
+    // first initList()
+    fun loadRound() {
 
         val isThisRoundNew = currentRound == antonymHistory.size
 
         if (isThisRoundNew) loadNewRound() else loadPreviousRound()
 
     }
+
+    fun onAnsweringRight() {
+        currentRound++
+        loadRound()
+    }
+
+    fun isItTheFirstGame(): Boolean = antonymHistory.isEmpty()
+
+    fun getTotalNumberOfRounds() = listOfPairs.size + antonymHistory.size
 
     private fun loadPreviousRound() {
         antonym.questionAndAnswerPair = antonymHistory[currentRound].questionAndAnswerPair
@@ -78,13 +89,4 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         allOptions.shuffle()
         return allOptions
     }
-
-    fun onAnsweringRight(data: List<Verb>) {
-        currentRound++
-        loadRound(data)
-    }
-
-    fun isItTheFirstGame(): Boolean = antonymHistory.isEmpty()
-
-    fun getTotalNumberOfRounds() = listOfPairs.size + antonymHistory.size
 }
