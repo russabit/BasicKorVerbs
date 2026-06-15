@@ -102,7 +102,7 @@ class AntonymsTestFragment : Fragment() {
     }
 
     private fun isAnswerRight(text: CharSequence) =
-        text.toString() == fragmentViewModel.antonym.questionAndAnswerPair.second
+        text.toString() == fragmentViewModel.round.questionAndAnswerPair.second
 
     private fun setOnToolbarBackArrowPressedNavigation() {
         (activity as? AppCompatActivity)?.onBackPressedDispatcher?.addCallback {
@@ -122,7 +122,7 @@ class AntonymsTestFragment : Fragment() {
 
     private fun setOptionButtons() {
         buttons.forEachIndexed { index, button ->
-            button.text = fragmentViewModel.antonym.listOfAnswerOptions[index]
+            button.text = fragmentViewModel.round.listOfAnswerOptions[index]
 
             setOnLongPressOptionWordNavigation(activityViewModel.dataList.value ?: emptyList())
 
@@ -133,7 +133,7 @@ class AntonymsTestFragment : Fragment() {
 
     private fun setCurrentWordTextView() {
         // set text
-        tvVerb.text = fragmentViewModel.antonym.questionAndAnswerPair.first
+        tvVerb.text = fragmentViewModel.round.questionAndAnswerPair.first
 
         val currentRoundPlayed = fragmentViewModel.currentRound.plus(1)
         tvRound.text =
@@ -143,7 +143,7 @@ class AntonymsTestFragment : Fragment() {
         tvVerb.setOnDoubleClickListener {
             //finds the right verb and let's us go to the second fragment with list of meanings
             val verb =
-                activityViewModel.dataList.value?.find { it.writing == fragmentViewModel.antonym.questionAndAnswerPair.first }
+                activityViewModel.dataList.value?.find { it.writing == fragmentViewModel.round.questionAndAnswerPair.first }
             val bundle = Bundle()
             activityViewModel.dataList.value?.let {
                 bundle.putInt(

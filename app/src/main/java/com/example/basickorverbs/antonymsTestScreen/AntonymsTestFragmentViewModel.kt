@@ -1,7 +1,7 @@
 package com.example.basickorverbs.antonymsTestScreen
 
 import androidx.lifecycle.ViewModel
-import com.example.basickorverbs.domain.Antonym
+import com.example.basickorverbs.domain.Round
 import com.example.basickorverbs.domain.Verb
 import com.example.basickorverbs.domain.buildAntonymVerbMap
 import kotlin.random.Random
@@ -16,10 +16,10 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         private set
 
     // list of rounds played
-    private var antonymHistory: ArrayList<Antonym> = ArrayList(5)
+    private var roundHistory: ArrayList<Round> = ArrayList(5)
 
     // antonym init
-    lateinit var antonym : Antonym
+    lateinit var round : Round
         private set
 
     fun getBackOneSet() {
@@ -38,7 +38,7 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     // first initList()
     fun loadRound() {
 
-        val isThisRoundNew = currentRound == antonymHistory.size
+        val isThisRoundNew = currentRound == roundHistory.size
 
         if (isThisRoundNew) loadNewRound() else loadPreviousRound()
 
@@ -49,26 +49,25 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         loadRound()
     }
 
-    fun isItTheFirstGame(): Boolean = antonymHistory.isEmpty()
+    fun isItTheFirstGame(): Boolean = roundHistory.isEmpty()
 
-    fun getTotalNumberOfRounds() = listOfPairs.size + antonymHistory.size
+    fun getTotalNumberOfRounds() = listOfPairs.size + roundHistory.size
 
     private fun loadPreviousRound() {
-        antonym.questionAndAnswerPair = antonymHistory[currentRound].questionAndAnswerPair
-        antonym.listOfAnswerOptions = antonymHistory[currentRound].listOfAnswerOptions
+        round.questionAndAnswerPair = roundHistory[currentRound].questionAndAnswerPair
+        round.listOfAnswerOptions = roundHistory[currentRound].listOfAnswerOptions
     }
 
     private fun loadNewRound() {
-        val entries = listOfPairs
 
-        val pair = entries[random.nextInt(entries.size)]
-        val allOptions = createAnswerOptions(entries, pair)
+        val newPair = listOfPairs[random.nextInt(listOfPairs.size)]
+        val newAnswerOptions = createAnswerOptions(listOfPairs, newPair)
 
-        antonym = Antonym(pair, allOptions)
+        round = Round(newPair, newAnswerOptions)
 
-        antonymHistory.add(Antonym(pair, allOptions))
+        roundHistory.add(Round(newPair, newAnswerOptions))
 
-        listOfPairs.remove(pair) // to get rid of possible doubles
+        listOfPairs.remove(newPair) // to get rid of possible doubles
     }
 
     private fun createAnswerOptions(entries: List<Pair<String, String>>, pair: Pair<String, String>): MutableList<String> {
