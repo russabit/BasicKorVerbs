@@ -1,9 +1,14 @@
 package com.example.basickorverbs
 
+import com.example.basickorverbs.antonymsTestScreen.AntonymsTestFragmentViewModel
+import com.example.basickorverbs.antonymsTestScreen.AntonymsTestFragmentViewModel.Companion.createAnswerOptions
 import com.example.basickorverbs.domain.Verb
+import com.example.basickorverbs.domain.buildAntonymVerbMap
+import com.example.basickorverbs.domain.buildSynonymVerbMap
 import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
+import kotlin.random.Random
 
 class VerbDictionaryTest {
 
@@ -39,9 +44,9 @@ class VerbDictionaryTest {
     fun allAntonymsMustExist() {
 
         verbs.forEach { verb ->
-            verb.meanings.forEach {  meaning ->
+            verb.meanings.forEach { meaning ->
 
-                val antonymId = meaning.antonymId.toInt()
+                val antonymId = meaning.antonymId
 
                 if (antonymId != 0) {
                     assertTrue(
@@ -59,7 +64,7 @@ class VerbDictionaryTest {
         verbs.forEach { verb ->
             verb.meanings.forEach { meaning ->
 
-                val synonymId = meaning.synonymId.toInt()
+                val synonymId = meaning.synonymId
 
                 if (synonymId != 0) {
                     assertTrue(
@@ -79,7 +84,7 @@ class VerbDictionaryTest {
 
             verb.meanings.forEach { meaning ->
 
-                val antonymId = meaning.antonymId.toInt()
+                val antonymId = meaning.antonymId
 
                 if (antonymId == 0) return@forEach
 
@@ -93,7 +98,7 @@ class VerbDictionaryTest {
 
                 val hasBackReference =
                     antonymVerb!!.meanings.any {
-                        it.antonymId.toInt() == verb.id
+                        it.antonymId == verb.id
                     }
 
                 assertTrue(
@@ -177,5 +182,86 @@ class VerbDictionaryTest {
                 )
             }
         }
+    }
+
+    @Test
+    fun answerOptions_shouldContainOnlyOneSynonymGroup() {
+
+
+        repeat(1000) {
+
+            val questionAnswerEntries = buildAntonymVerbMap(verbs).toList()
+            val listOfSynonymPairs = buildSynonymVerbMap(verbs)
+            val synonymMap =
+                AntonymsTestFragmentViewModel.Companion.buildSynonymMap(listOfSynonymPairs)
+
+            val pair =
+                questionAnswerEntries.first {
+                    it.first == "약(弱)하다"
+                }
+
+            val options =
+                createAnswerOptions(
+                    Random,
+                    questionAnswerEntries,
+                    pair,
+                    synonymMap
+                )
+
+            val strongWords =
+                setOf(
+                    "세다",
+                    "강(強)하다",
+                    "굳세다"
+                )
+
+            val matches =
+                options.count {
+                    it in strongWords
+                }
+
+            assertTrue(
+                """
+            Too many synonym answers.
+
+            options=$options
+            count=$matches
+            """.trimIndent(),
+                matches <= 1,
+            )
+        }
+    }
+
+    @Test
+    fun synonymsMustNotPointToSelf() {
+
+        val errors =
+            verbs.flatMap { verb ->
+
+                verb.meanings.mapNotNull { meaning ->
+
+                    if (
+                        meaning.synonymId != 0 &&
+                        meaning.synonymId == verb.id
+                    ) {
+                        """
+                    id=${verb.id}
+                    writing=${verb.writing}
+                    synonymId=${meaning.synonymId}
+                    """.trimIndent()
+                    } else {
+                        null
+                    }
+                }
+            }
+
+        assertTrue(
+            """
+        Self-referencing synonyms found:
+
+        ${errors.joinToString("\n\n")}
+        """.trimIndent(),
+            errors.isEmpty()
+        )
     }
 }

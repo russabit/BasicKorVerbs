@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import com.example.basickorverbs.domain.Round
 import com.example.basickorverbs.domain.Verb
 import com.example.basickorverbs.domain.buildAntonymVerbMap
+import com.example.basickorverbs.domain.buildSynonymVerbMap
 import kotlin.random.Random
 
 class AntonymsTestFragmentViewModel : ViewModel() {
 
     private val random = Random
-    private lateinit var listOfPairs: MutableList<Pair<String, String>>
+    private lateinit var listOfPairs: MutableList<Pair<Question, Answer>>
+    private lateinit var synonymMap : Map<String, Set<String>>
 
     // number of round played now
     var currentRound = 0
@@ -33,9 +35,10 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         if (!this::listOfPairs.isInitialized) {
             listOfPairs = buildAntonymVerbMap(data).toMutableList()
         }
+        synonymMap = buildSynonymMap(buildSynonymVerbMap(data))
     }
 
-    // first initList()
+    // handles both cases because we can answer right on the round we already played
     fun loadRound() {
 
         val isThisRoundNew = currentRound == roundHistory.size
@@ -61,7 +64,9 @@ class AntonymsTestFragmentViewModel : ViewModel() {
     private fun loadNewRound() {
 
         val newPair = listOfPairs[random.nextInt(listOfPairs.size)]
-        val newAnswerOptions = createAnswerOptions(listOfPairs, newPair)
+
+        val newAnswerOptions =
+            createAnswerOptions(random, listOfPairs, newPair, synonymMap)
 
         round = Round(newPair, newAnswerOptions)
 
@@ -70,22 +75,59 @@ class AntonymsTestFragmentViewModel : ViewModel() {
         listOfPairs.remove(newPair) // to get rid of possible doubles
     }
 
-    private fun createAnswerOptions(entries: List<Pair<String, String>>, pair: Pair<String, String>): MutableList<String> {
-        val allOptions = mutableListOf<String>()
-        allOptions.add(pair.second)
+    companion object {
 
-        while (allOptions.size < 4) {
-            val candidate = entries[random.nextInt(entries.size)].second
-            if (
-                candidate != pair.second &&
-                !allOptions.contains(candidate)
-                // todo exclude synonym
-            ) {
-                allOptions.add(candidate)
+        // only normalized pair
+        fun createAnswerOptions(
+            random: Random,
+            entries: List<Pair<Question, Answer>>,
+            pair: Pair<Question, Answer>,
+            synonymMap: Map<String, Set<String>>
+        ): MutableList<String> {
+
+            val allOptions = mutableListOf<String>()
+
+            val question = pair.first
+            val answer = pair.second
+            allOptions.add(answer)
+
+            while (allOptions.size < 4) {
+
+                val candidate = entries[random.nextInt(entries.size)].toList().random()
+
+                if (
+                    candidate != answer &&
+                    candidate !in allOptions &&
+                    candidate !in synonymMap[question].orEmpty()
+                ) {
+                    allOptions.add(candidate)
+                }
             }
+
+            allOptions.shuffle()
+            return allOptions
         }
 
-        allOptions.shuffle()
-        return allOptions
+        fun buildSynonymMap(listOfSynonymPairs: Set<Pair<Question, Answer>>): Map<String, Set<String>> {
+            return buildMap {
+
+                listOfSynonymPairs.forEach { (a, b) ->
+
+                    put(
+                        a,
+                        getOrDefault(a, emptySet()) + b
+                    )
+
+                    put(
+                        b,
+                        getOrDefault(b, emptySet()) + a
+                    )
+                }
+            }
+        }
     }
+
 }
+
+typealias Question = String
+typealias Answer = String
